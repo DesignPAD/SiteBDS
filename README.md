@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BDS Équipements v2
 
-## Getting Started
+Plateforme e-commerce de quincaillerie moderne pour Dakar — rebuild complet du site
+[bdsequipements.com](https://www.bdsequipements.com).
 
-First, run the development server:
+> **Brief complet** : [docs/bds-equipements-claude-code-brief.md](docs/bds-equipements-claude-code-brief.md)
+> **Références visuelles** : [docs/design-references/](docs/design-references/)
+
+## Stack
+
+- **Next.js** (App Router) + **TypeScript** + **Tailwind CSS**
+- Déploiement cible : **Vercel** (domaine `bdsequipements.com` pointé dessus)
+- Catalogue : fichiers de données typés (`data/`) — **jamais codé dans le HTML**
+- Validation prix/commandes : **côté serveur** (Server Actions / Route Handlers)
+
+## Démarrer
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+bds-equipements-v2/
+├── app/            ← Pages (App Router)
+├── data/
+│   ├── categories.ts   ← 5 catégories BDS
+│   └── products.ts     ← 36 produits réels, prix officiels du magasin (juillet 2026)
+├── public/
+│   └── products/       ← 36 photos produits
+├── docs/
+│   ├── bds-equipements-claude-code-brief.md  ← Le brief de référence
+│   └── design-references/                    ← Captures d'inspiration (principes seulement)
+└── ...
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Règles du projet (résumé du brief)
 
-## Learn More
+- Une seule promesse BDS, un seul H1 par page, pas de carrousel autoplay.
+- Prix, totaux et stock **recalculés côté serveur** — jamais confiance au navigateur.
+- Aucun chiffre, avis ou marque fictif.
+- Mobile-first, accessible au clavier, images optimisées (WebP/AVIF via `next/image`).
+- Aucun secret dans Git.
 
-To learn more about Next.js, take a look at the following resources:
+## Données produits
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Les prix viennent des photos officielles du magasin (juillet 2026).
+Produit sans prix communiqué : `priceOnRequest: true` (ex. Lustres LED — prix à demander au magasin).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Sites liés
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **v1 (en ligne actuellement)** : site statique dans
+  `..\Site_Officiel_bds (2)\Mon Site Quincaillerie - Copie\youuu2` — reste en production
+  sur Hostinger jusqu'à la mise en ligne de la v2.
