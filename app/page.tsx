@@ -1,65 +1,191 @@
-import Image from "next/image";
+import Image from 'next/image';
+import Link from 'next/link';
+import { ProductCard } from '@/components/product-card';
+import { categories } from '@/data/categories';
+import { products } from '@/data/products';
+import { site, waLink } from '@/lib/site';
+
+const featured = [
+  'lampadaire-6-boules',
+  'porte-bois-fonce',
+  'lavabo-vasque-couleur',
+  'lambris-marbre',
+  'applique-double-faisceau',
+  'carreau-60x60-beige',
+  'robinet-evier',
+  'chambre-a-coucher',
+]
+  .map((id) => products.find((p) => p.id === id))
+  .filter((p) => p !== undefined);
+
+const benefits = [
+  {
+    title: 'Produits en stock à Dakar',
+    text: 'Ce que vous voyez sur le site est disponible dans notre magasin de Diamalaye.',
+    icon: '🏪',
+  },
+  {
+    title: 'Livraison à Dakar et environs',
+    text: 'Nous livrons vos matériaux et équipements — délais confirmés à la commande.',
+    icon: '🚚',
+  },
+  {
+    title: 'Conseil avant achat',
+    text: 'Notre équipe vous aide à choisir le bon produit pour votre projet.',
+    icon: '💬',
+  },
+  {
+    title: 'Commande assistée WhatsApp',
+    text: 'Composez votre panier, envoyez-le sur WhatsApp, on s’occupe du reste.',
+    icon: '✅',
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+    <div>
+      {/* Hero — une seule promesse, vraie photo produit */}
+      <section className="bg-navy text-white">
+        <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 lg:grid-cols-2 lg:py-20">
+          <div>
+            <p className="mb-3 inline-block rounded-full bg-sun/20 px-3 py-1 text-sm font-semibold text-sun">
+              Quincaillerie & équipement maison — Dakar
+            </p>
+            <h1 className="text-3xl font-extrabold leading-tight sm:text-5xl">
+              Équipez votre maison{' '}
+              <span className="text-sun">sans vous ruiner</span>
+            </h1>
+            <p className="mt-4 max-w-lg text-white/80">
+              Matériaux de construction, sanitaire, luminaires, portes et
+              revêtements — aux prix officiels du magasin, livrés chez vous à
+              Dakar.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/boutique"
+                className="rounded-full bg-brand px-7 py-3.5 font-bold text-white transition hover:bg-brand-dark"
+              >
+                Voir le catalogue
+              </Link>
+              <a
+                href={waLink('Bonjour BDS Équipements, je souhaite demander un devis.')}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border-2 border-white/40 px-7 py-3.5 font-bold text-white transition hover:border-sun hover:text-sun"
+              >
+                Demander un devis
+              </a>
+            </div>
+          </div>
+          <div className="overflow-hidden rounded-card">
             <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+              src="/products/chambre_a_coucher.jpeg"
+              alt="Chambre à coucher complète exposée dans notre showroom"
+              width={760}
+              height={740}
+              priority
+              className="h-full w-full object-cover"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Catégories */}
+      <section className="mx-auto max-w-7xl px-4 py-12">
+        <div className="mb-6 flex items-end justify-between">
+          <h2 className="text-2xl font-extrabold text-navy sm:text-3xl">
+            Nos <span className="text-brand">catégories</span>
+          </h2>
+          <Link href="/boutique" className="text-sm font-bold text-royal hover:underline">
+            Tout voir →
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          {categories.map((c) => (
+            <Link
+              key={c.id}
+              href={`/boutique?categorie=${c.id}`}
+              className="group overflow-hidden rounded-card border border-line bg-white transition hover:shadow-lg"
+            >
+              {c.image && (
+                <div className="aspect-square overflow-hidden bg-cream">
+                  <Image
+                    src={c.image}
+                    alt={c.name}
+                    width={300}
+                    height={300}
+                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                  />
+                </div>
+              )}
+              <p className="p-3 text-center text-sm font-bold text-ink group-hover:text-brand">
+                {c.name}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Produits populaires */}
+      <section className="bg-white py-12">
+        <div className="mx-auto max-w-7xl px-4">
+          <div className="mb-6 flex items-end justify-between">
+            <h2 className="text-2xl font-extrabold text-navy sm:text-3xl">
+              Produits <span className="text-brand">populaires</span>
+            </h2>
+            <Link href="/boutique" className="text-sm font-bold text-royal hover:underline">
+              Toute la boutique →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {featured.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bénéfices */}
+      <section className="mx-auto max-w-7xl px-4 py-12">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {benefits.map((b) => (
+            <div key={b.title} className="rounded-card border border-line bg-white p-5">
+              <p className="text-2xl" aria-hidden>{b.icon}</p>
+              <p className="mt-2 font-bold text-navy">{b.title}</p>
+              <p className="mt-1 text-sm text-muted">{b.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Bloc devis / WhatsApp */}
+      <section className="mx-auto max-w-7xl px-4 pb-4">
+        <div className="rounded-card bg-navy px-6 py-10 text-center text-white sm:px-12">
+          <h2 className="text-2xl font-extrabold sm:text-3xl">
+            Un projet ? Un chantier ? <span className="text-sun">Parlons-en.</span>
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-white/80">
+            Envoyez-nous votre liste de matériaux : nous préparons votre devis et
+            organisons la livraison à Dakar.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <a
+              href={waLink('Bonjour BDS Équipements, voici ma liste de matériaux pour un devis :')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-success px-7 py-3.5 font-bold text-white hover:opacity-90"
+            >
+              Devis sur WhatsApp
+            </a>
+            <a
+              href={`tel:${site.phones[0].replace(/\s/g, '')}`}
+              className="rounded-full border-2 border-white/40 px-7 py-3.5 font-bold hover:border-sun hover:text-sun"
+            >
+              Appeler le {site.phones[0]}
+            </a>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

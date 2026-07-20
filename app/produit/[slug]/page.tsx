@@ -1,0 +1,179 @@
+import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { Price } from '@/components/price';
+import { ProductActions } from '@/components/product-actions';
+import { ProductCard } from '@/components/product-card';
+import { StockBadge } from '@/components/stock-badge';
+import { getCategory } from '@/data/categories';
+import { getProduct, getProductsByCategory, products } from '@/data/products';
+import { site } from '@/lib/site';
+
+type Params = Promise<{ slug: string }>;
+
+export function generateStaticParams() {
+  return products.map((p) => ({ slug: p.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  const { slug } = await params;
+  const product = getProduct(slug);
+  if (!product) return {};
+  return {
+    title: product.name,
+    description: `${product.shortDescription} Réf. ${product.sku} — disponible chez ${site.name}, Dakar.`,
+    openGraph: { images: [product.images[0].src] },
+  };
+}
+
+export default async function ProductPage({ params }: { params: Params }) {
+  const { slug } = await params;
+  const product = getProduct(slug);
+  if (!product) notFound();
+
+  const category = getCategory(product.categoryId);
+  const similar = getProductsByCategory(product.categoryId)
+    .filter((p) => p.id !== product.id)
+    .slice(0, 4);
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    sku: product.sku,
+    image: `${site.url}${product.images[0].src}`,
+    description: product.shortDescription,
+    ...(product.priceOnRequest
+      ? {}
+      : {
+          offers: {
+            '@type': 'Offer',
+            price: product.salePrice ?? product.price,
+            priceCurrency: 'XOF',
+            availability:
+              product.stockStatus === 'out_of_stock'
+                ? 'https://schema.org/OutOfStock'
+                : 'https://schema.org/InStock',
+          },
+        }),
+  };
+
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      {/* Breadcrumbs */}
+      <nav aria-label="Fil d’Ariane" className="mb-6 text-sm text-muted">
+        <ol className="flex flex-wrap gap-1">
+          <li>
+            <Link href="/" className="hover:text-brand">Accueil</Link>
+            <span aria-hidden> / </span>
+          </li>
+          <li>
+            <Link href="/boutique" className="hover:text-brand">Boutique</Link>
+            <span aria-hidden> / </span>
+          </li>
+          {category && (
+            <li>
+              <Link href={`/boutique?categorie=${category.id}`} className="hover:text-brand">
+                {category.name}
+              </Link>
+              <span aria-hidden> / </span>
+            </li>
+          )}
+          <li className="font-semibold text-ink">{product.name}</li>
+        </ol>
+      </nav>
+
+      <div className="grid gap-8 lg:grid-cols-2">
+        {/* Galerie */}
+        <div className="overflow-hidden rounded-card border border-line bg-white">
+          <Image
+            src={product.images[0].src}
+            alt={product.images[0].alt}
+            width={800}
+            height={800}
+            priority
+            className="h-full w-full object-cover"
+          />
+        </div>
+
+        {/* Infos */}
+        <div>
+          <div className="flex flex-wrap items-center gap-2">
+            {category && (
+              <span className="rounded bg-cream px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-muted">
+                {category.name}
+              </span>
+            )}
+            <StockBadge status={product.stockStatus} />
+          </div>
+          <h1 className="mt-3 text-3xl font-extrabold text-navy">{product.name}</h1>
+          <p className="mt-1 text-sm text-muted">
+            Réf. {product.sku}
+            {product.brand && <> · Marque : {product.brand}</>}
+          </p>
+          <div className="mt-4">
+            <Price product={product} size="lg" />
+          </div>
+          <p className="mt-4 text-muted">{product.shortDescription}</p>
+
+          <div className="mt-6">
+            <ProductActions product={product} />
+          </div>
+
+          {/* Livraison — parcours commande → livraison */}
+          <div className="mt-6 space-y-2 rounded-card bg-white border border-line p-4 text-sm">
+            <p className="font-bold text-navy">Comment ça se passe ?</p>
+            <ol className="list-decimal space-y-1 pl-5 text-muted">
+              <li>Ajoutez au panier ou écrivez-nous sur WhatsApp.</li>
+              <li>Nous confirmons la disponibilité, le total et le délai.</li>
+              <li>Livraison à Dakar et environs, ou retrait au magasin ({site.address}).</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      {/* Description + specs */}
+      <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        <section className="rounded-card border border-line bg-white p-6">
+          <h2 className="text-lg font-extrabold text-navy">Description</h2>
+          <p className="mt-3 text-sm leading-relaxed text-muted">{product.description}</p>
+        </section>
+        <section className="rounded-card border border-line bg-white p-6">
+          <h2 className="text-lg font-extrabold text-navy">Caractéristiques</h2>
+          <dl className="mt-3 divide-y divide-line text-sm">
+            {Object.entries(product.specifications).map(([key, value]) => (
+              <div key={key} className="flex justify-between gap-4 py-2">
+                <dt className="font-semibold text-ink">{key}</dt>
+                <dd className="text-right text-muted">{value}</dd>
+              </div>
+            ))}
+            <div className="flex justify-between gap-4 py-2">
+              <dt className="font-semibold text-ink">Référence</dt>
+              <dd className="text-right text-muted">{product.sku}</dd>
+            </div>
+          </dl>
+        </section>
+      </div>
+
+      {/* Produits similaires */}
+      {similar.length > 0 && (
+        <section className="mt-12">
+          <h2 className="text-2xl font-extrabold text-navy">
+            Produits <span className="text-brand">similaires</span>
+          </h2>
+          <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {similar.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </section>
+      )}
+    </div>
+  );
+}
