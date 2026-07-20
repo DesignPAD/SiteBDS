@@ -1,0 +1,591 @@
+// Catalogue officiel BDS Equipements.
+// Source des prix : photos du magasin (juillet 2026), dossier "image Materiaux + prix".
+// Schéma conforme au brief docs/bds-equipements-claude-code-brief.md.
+
+export type StockStatus = 'in_stock' | 'low_stock' | 'out_of_stock';
+
+export type Product = {
+  id: string;
+  slug: string;
+  sku: string;
+  name: string;
+  categoryId: string;
+  brand?: string;
+  price: number;
+  salePrice?: number;
+  /** Prix non communiqué par le magasin : afficher « Prix sur demande » et price = 0. */
+  priceOnRequest?: boolean;
+  currency: 'XOF';
+  stockStatus: StockStatus;
+  images: { src: string; alt: string }[];
+  shortDescription: string;
+  description: string;
+  specifications: Record<string, string>;
+};
+
+export const products: Product[] = [
+  // ===== LUMINAIRES =====
+  {
+    id: 'applique-led-calligraphie',
+    slug: 'applique-murale-led-calligraphie',
+    sku: 'BDS-LUM-001',
+    name: 'Applique Murale LED Calligraphie',
+    categoryId: 'luminaires',
+    price: 25000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/applique_led_calligraphie.jpeg', alt: 'Applique murale LED carrée avec calligraphie islamique' }],
+    shortDescription: 'Cadre lumineux carré, éclairage chaud.',
+    description:
+      "Applique murale LED avec calligraphie islamique rétroéclairée. Cadre carré à contour lumineux, éclairage chaud et doux, idéale pour salon, chambre ou entrée.",
+    specifications: { Type: 'Applique murale LED', Forme: 'Carrée', Éclairage: 'Blanc chaud' },
+  },
+  {
+    id: 'applique-led-ovale',
+    slug: 'applique-murale-led-ovale',
+    sku: 'BDS-LUM-002',
+    name: 'Applique Murale LED Ovale',
+    categoryId: 'luminaires',
+    price: 30000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/applique_led_ovale.jpeg', alt: 'Applique murale LED ovale avec calligraphie' }],
+    shortDescription: 'Cadre lumineux ovale, éclairage doré.',
+    description:
+      "Applique murale LED ovale avec calligraphie rétroéclairée dorée. Contour lumineux élégant pour une ambiance chaleureuse.",
+    specifications: { Type: 'Applique murale LED', Forme: 'Ovale', Éclairage: 'Doré' },
+  },
+  {
+    id: 'applique-double-faisceau',
+    slug: 'applique-murale-double-faisceau',
+    sku: 'BDS-LUM-003',
+    name: 'Applique Murale Double Faisceau',
+    categoryId: 'luminaires',
+    price: 25000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/applique_double_faisceau.jpeg', alt: 'Applique murale LED noire à double faisceau lumineux' }],
+    shortDescription: 'Up & Down Light — effet croisé moderne.',
+    description:
+      "Applique murale noire à double faisceau (haut et bas) créant un effet lumineux croisé spectaculaire sur le mur. Design moderne pour intérieur ou terrasse couverte.",
+    specifications: { Type: 'Applique murale LED', Éclairage: 'Up & Down', Couleur: 'Noir' },
+  },
+  {
+    id: 'lampe-3-boules',
+    slug: 'lampe-de-table-3-boules',
+    sku: 'BDS-LUM-004',
+    name: 'Lampe de Table 3 Boules',
+    categoryId: 'luminaires',
+    price: 35000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lampe_3_boules.jpeg', alt: 'Lampe de table à 3 boules blanches sur base en marbre' }],
+    shortDescription: 'Tige dorée, base en marbre blanc.',
+    description:
+      "Lampe de table élégante à trois globes blancs opalins montés sur tige dorée avec base en marbre blanc. Parfaite pour chevet ou salon.",
+    specifications: { Type: 'Lampe de table', Globes: '3', Base: 'Marbre blanc', Finition: 'Doré' },
+  },
+  {
+    id: 'lampe-4-boules',
+    slug: 'lampe-4-boules-marbre',
+    sku: 'BDS-LUM-005',
+    name: 'Lampe 4 Boules Marbre',
+    categoryId: 'luminaires',
+    price: 35000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lampe_4_boules.jpeg', alt: 'Lampe à 4 boules blanches, tige dorée et base marbre' }],
+    shortDescription: 'Tige dorée, base en marbre.',
+    description:
+      "Lampe à quatre globes blancs opalins sur tige dorée et base en marbre. Un point lumineux décoratif et raffiné.",
+    specifications: { Type: 'Lampe de table', Globes: '4', Base: 'Marbre', Finition: 'Doré' },
+  },
+  {
+    id: 'lampadaire-6-boules',
+    slug: 'lampadaire-6-boules',
+    sku: 'BDS-LUM-006',
+    name: 'Lampadaire 6 Boules',
+    categoryId: 'luminaires',
+    price: 50000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lampadaire_6_boules.jpeg', alt: 'Lampadaire sur pied à 6 boules blanches, tige dorée' }],
+    shortDescription: 'Sur pied, tige dorée et base marbre.',
+    description:
+      "Lampadaire sur pied à six globes blancs répartis le long d'une tige dorée, base ronde en marbre blanc. Hauteur idéale pour salon.",
+    specifications: { Type: 'Lampadaire sur pied', Globes: '6', Base: 'Marbre', Finition: 'Doré / Noir' },
+  },
+  {
+    id: 'lampadaire-spirale',
+    slug: 'lampadaire-led-spirale',
+    sku: 'BDS-LUM-007',
+    name: 'Lampadaire LED Spirale',
+    categoryId: 'luminaires',
+    price: 50000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lampadaire_spirale.jpeg', alt: 'Lampadaire LED en spirale, design moderne' }],
+    shortDescription: 'Ruban LED torsadé, design contemporain.',
+    description:
+      "Lampadaire au ruban LED torsadé en forme de spirale infinie. Pièce design qui éclaire et décore à la fois.",
+    specifications: { Type: 'Lampadaire LED', Design: 'Spirale', Éclairage: 'Blanc chaud' },
+  },
+  {
+    id: 'lampe-spirale-table',
+    slug: 'lampe-led-spirale-de-table',
+    sku: 'BDS-LUM-008',
+    name: 'Lampe LED Spirale de Table',
+    categoryId: 'luminaires',
+    price: 35000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lampe_spirale_table.jpeg', alt: 'Lampe de table LED en spirale' }],
+    shortDescription: 'Ruban LED torsadé, éclairage chaud.',
+    description:
+      "Version de table du lampadaire spirale : ruban LED torsadé sur socle rond noir. Un objet lumineux sculptural pour bureau ou chevet.",
+    specifications: { Type: 'Lampe de table LED', Design: 'Spirale', Socle: 'Noir' },
+  },
+  {
+    id: 'lampadaire-sculptural',
+    slug: 'lampadaire-sculptural-noir',
+    sku: 'BDS-LUM-009',
+    name: 'Lampadaire Sculptural Noir',
+    categoryId: 'luminaires',
+    price: 80000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lampadaire_sculptural.jpeg', alt: 'Lampadaire sculptural noir avec boule lumineuse blanche' }],
+    shortDescription: 'Forme ondulée, globe lumineux blanc.',
+    description:
+      "Lampadaire sculptural à silhouette ondulée noire surmontée d'un globe lumineux blanc. Une pièce maîtresse pour salon moderne.",
+    specifications: { Type: 'Lampadaire design', Couleur: 'Noir', Globe: 'Blanc opalin' },
+  },
+  {
+    id: 'lampadaire-statue',
+    slug: 'lampadaire-statue',
+    sku: 'BDS-LUM-010',
+    name: 'Lampadaire Statue',
+    categoryId: 'luminaires',
+    price: 80000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lampadaire_statue.jpeg', alt: 'Lampadaire statue noire portant un globe lumineux' }],
+    shortDescription: 'Silhouette noire portant un globe lumineux.',
+    description:
+      "Lampadaire figuratif : une silhouette noire élancée porte à bout de bras un globe lumineux. Effet garanti dans une entrée ou un salon.",
+    specifications: { Type: 'Lampadaire design', Couleur: 'Noir', Globe: 'Blanc opalin' },
+  },
+  {
+    id: 'lampadaire-deco-arc',
+    slug: 'lampadaire-deco-en-arc',
+    sku: 'BDS-LUM-011',
+    name: 'Lampadaire Déco en Arc',
+    categoryId: 'luminaires',
+    price: 85000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lampadaire_deco.jpeg', alt: 'Lampadaires décoratifs en arc, plusieurs modèles' }],
+    shortDescription: 'Plusieurs modèles disponibles.',
+    description:
+      "Lampadaires en arc avec abat-jour dôme, plusieurs coloris et formes disponibles en magasin. Éclairage d'appoint élégant au-dessus d'un fauteuil ou canapé.",
+    specifications: { Type: 'Lampadaire en arc', Modèles: 'Plusieurs disponibles' },
+  },
+  {
+    id: 'lampadaire-boule-ambre',
+    slug: 'lampadaire-boule-ambre',
+    sku: 'BDS-LUM-012',
+    name: 'Lampadaire Boule Ambre',
+    categoryId: 'luminaires',
+    price: 90000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lampadaire_boule_ambre.jpeg', alt: 'Lampadaire avec boule ambre et tablettes en bois' }],
+    shortDescription: 'Avec tablettes en bois intégrées.',
+    description:
+      "Lampadaire au globe ambre chaleureux monté sur structure noire avec tablettes rondes en bois intégrées — pratique pour poser un livre ou une tasse.",
+    specifications: { Type: 'Lampadaire', Globe: 'Verre ambre', Tablettes: 'Bois' },
+  },
+  {
+    id: 'veilleuse-champignon',
+    slug: 'veilleuse-champignon',
+    sku: 'BDS-LUM-013',
+    name: 'Veilleuse Champignon',
+    categoryId: 'luminaires',
+    price: 15000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/veilleuse_champignon.jpeg', alt: 'Veilleuses champignon roses et orange' }],
+    shortDescription: 'Plusieurs couleurs disponibles.',
+    description:
+      "Veilleuse en forme de champignon, lumière douce et apaisante. Plusieurs coloris de base disponibles (rose, orange…). Idéale pour chambre d'enfant.",
+    specifications: { Type: 'Veilleuse', Forme: 'Champignon', Couleurs: 'Plusieurs' },
+  },
+  {
+    id: 'veilleuse-orange',
+    slug: 'veilleuse-champignon-orange',
+    sku: 'BDS-LUM-014',
+    name: 'Veilleuse Champignon Orange',
+    categoryId: 'luminaires',
+    price: 15000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/veilleuse_orange.jpeg', alt: 'Veilleuse champignon orange à abat-jour blanc' }],
+    shortDescription: 'Base boule orange, abat-jour blanc.',
+    description:
+      "Veilleuse champignon à base boule orange brillante et large abat-jour blanc opalin. Lumière tamisée pour chevet ou chambre d'enfant.",
+    specifications: { Type: 'Veilleuse', Base: 'Orange', 'Abat-jour': 'Blanc opalin' },
+  },
+  {
+    id: 'lustres-led',
+    slug: 'lustres-led',
+    sku: 'BDS-LUM-015',
+    name: 'Lustres LED',
+    categoryId: 'luminaires',
+    price: 0,
+    priceOnRequest: true,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lustres_led.jpeg', alt: 'Lustres et plafonniers LED, plusieurs modèles' }],
+    shortDescription: 'Grand choix de plafonniers et lustres.',
+    description:
+      "Grand choix de lustres et plafonniers LED : modèles à cristaux, anneaux lumineux, formes géométriques… Contactez-nous pour les modèles et tarifs disponibles.",
+    specifications: { Type: 'Lustre / Plafonnier LED', Modèles: 'Plusieurs disponibles' },
+  },
+
+  // ===== CARRELAGE & REVÊTEMENTS =====
+  {
+    id: 'carreau-60x60-beige',
+    slug: 'carreau-60x60-beige',
+    sku: 'BDS-REV-001',
+    name: 'Carreau 60×60 Beige',
+    categoryId: 'revetements',
+    price: 8000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/carreau_60x60_beige.jpeg', alt: 'Carreau 60x60 beige effet marbre' }],
+    shortDescription: 'Effet marbre, finition brillante.',
+    description:
+      "Carreau de sol 60×60 cm beige à veinage effet marbre, finition brillante. Élégant et facile d'entretien pour salon, chambre ou commerce.",
+    specifications: { Dimensions: '60 × 60 cm', Couleur: 'Beige', Effet: 'Marbre', Usage: 'Sol' },
+  },
+  {
+    id: 'carreau-60x60-gris',
+    slug: 'carreau-60x60-gris',
+    sku: 'BDS-REV-002',
+    name: 'Carreau 60×60 Gris',
+    categoryId: 'revetements',
+    price: 8000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/carreau_60x60_gris.jpeg', alt: 'Carreau 60x60 gris effet marbre' }],
+    shortDescription: 'Effet marbre gris, finition moderne.',
+    description:
+      "Carreau de sol 60×60 cm gris à veinage effet marbre. Rendu moderne et sobre, adapté aux intérieurs contemporains.",
+    specifications: { Dimensions: '60 × 60 cm', Couleur: 'Gris', Effet: 'Marbre', Usage: 'Sol' },
+  },
+  {
+    id: 'lambris-marbre',
+    slug: 'lambris-pvc-marbre',
+    sku: 'BDS-REV-003',
+    name: 'Lambris PVC Marbré',
+    categoryId: 'revetements',
+    price: 6500,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lambris_marbre.jpeg', alt: 'Lambris PVC effet marbre doré, plusieurs coloris' }],
+    shortDescription: 'Effet marbre & or, plusieurs coloris.',
+    description:
+      "Panneaux de lambris PVC strié à effet marbre rehaussé d'or : blanc, noir, vert d'eau… Habillage mural rapide et spectaculaire.",
+    specifications: { Matériau: 'PVC', Effet: 'Marbre & or', Coloris: 'Plusieurs', Pose: 'Murale' },
+  },
+  {
+    id: 'lambris-strie',
+    slug: 'lambris-mural-strie',
+    sku: 'BDS-REV-004',
+    name: 'Lambris Mural Strié',
+    categoryId: 'revetements',
+    price: 6500,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lambris_strie.jpeg', alt: 'Lambris mural strié, plusieurs finitions bois' }],
+    shortDescription: 'Finitions bois, gris, blanc et plus.',
+    description:
+      "Lambris mural strié (tasseaux) disponible en finitions bois clair, bois rouge, gris, blanc, noir marbré… Pour murs d'accent et têtes de lit.",
+    specifications: { Matériau: 'PVC / WPC', Style: 'Tasseaux striés', Coloris: 'Plusieurs' },
+  },
+  {
+    id: 'papier-peint',
+    slug: 'papier-peint',
+    sku: 'BDS-REV-005',
+    name: 'Papier Peint',
+    categoryId: 'revetements',
+    price: 6000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/papier_peint.jpeg', alt: 'Rouleau de papier peint effet tissage' }],
+    shortDescription: 'Rouleau décoratif, plusieurs motifs.',
+    description:
+      "Papier peint en rouleau, motifs variés (tissage, effets matière…). Transforme une pièce rapidement et à petit prix.",
+    specifications: { Conditionnement: 'Rouleau', Motifs: 'Plusieurs disponibles' },
+  },
+  {
+    id: 'papier-pvc-marbre',
+    slug: 'papier-pvc-marbre',
+    sku: 'BDS-REV-006',
+    name: 'Papier PVC Marbré',
+    categoryId: 'revetements',
+    price: 10000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/papier_pvc_marbre.jpeg', alt: 'Rouleaux de papier PVC adhésif effet marbre' }],
+    shortDescription: 'Adhésif effet marbre, grands rouleaux.',
+    description:
+      "Grands rouleaux de papier PVC adhésif effet marbre (blanc, gris, rose doré…). Idéal pour relooker murs, meubles et plans de travail.",
+    specifications: { Matériau: 'PVC adhésif', Effet: 'Marbre', Format: 'Grand rouleau' },
+  },
+
+  // ===== SANITAIRE & ROBINETTERIE =====
+  {
+    id: 'lavabo-vasque-blanche',
+    slug: 'lavabo-vasque-blanche',
+    sku: 'BDS-SAN-001',
+    name: 'Lavabo Vasque Blanche',
+    categoryId: 'sanitaire',
+    price: 35000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lavabo_vasque_blanche.jpeg', alt: 'Lavabo vasque ronde blanche à poser' }],
+    shortDescription: 'Vasque ronde à poser, céramique.',
+    description:
+      "Vasque ronde à poser en céramique blanche, lignes épurées. S'installe sur meuble ou plan de salle de bain.",
+    specifications: { Type: 'Vasque à poser', Forme: 'Ronde', Matériau: 'Céramique', Couleur: 'Blanc' },
+  },
+  {
+    id: 'lavabo-vasque-couleur',
+    slug: 'lavabo-vasque-coloree',
+    sku: 'BDS-SAN-002',
+    name: 'Lavabo Vasque Colorée',
+    categoryId: 'sanitaire',
+    price: 35000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/lavabo_vasque_couleur.jpeg', alt: 'Lavabos vasques colorés bleu et rose' }],
+    shortDescription: 'Bleu, rose et autres coloris.',
+    description:
+      "Vasque ronde à poser en céramique mate colorée : bleu, rose terracotta et autres coloris. Apporte du caractère à la salle de bain.",
+    specifications: { Type: 'Vasque à poser', Forme: 'Ronde', Matériau: 'Céramique', Coloris: 'Plusieurs' },
+  },
+  {
+    id: 'robinet-evier',
+    slug: 'robinet-evier',
+    sku: 'BDS-SAN-003',
+    name: 'Robinet Évier',
+    categoryId: 'sanitaire',
+    price: 35000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/robinet_evier.jpeg', alt: "Robinets d'évier col de cygne, plusieurs finitions" }],
+    shortDescription: 'Col de cygne — noir, doré, chromé.',
+    description:
+      "Robinet mitigeur d'évier col de cygne avec douchette extractible selon modèle. Finitions noir mat, doré, chromé ou gris anthracite.",
+    specifications: { Type: 'Mitigeur évier', Bec: 'Col de cygne', Finitions: 'Noir / Doré / Chromé' },
+  },
+  {
+    id: 'robinet-cuisine',
+    slug: 'robinet-de-cuisine',
+    sku: 'BDS-SAN-004',
+    name: 'Robinet de Cuisine',
+    categoryId: 'sanitaire',
+    price: 18000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/robinet_cuisine.jpeg', alt: 'Robinet de cuisine gris anthracite' }],
+    shortDescription: 'Col de cygne gris anthracite.',
+    description:
+      "Robinet de cuisine col de cygne en finition gris anthracite brossé, livré en boîte. Rotation large pour éviers une ou deux cuves.",
+    specifications: { Type: 'Robinet cuisine', Bec: 'Col de cygne', Finition: 'Gris anthracite' },
+  },
+  {
+    id: 'robinet-lavabo',
+    slug: 'robinet-lavabo',
+    sku: 'BDS-SAN-005',
+    name: 'Robinet Lavabo',
+    categoryId: 'sanitaire',
+    price: 18000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/robinet_lavabo.jpeg', alt: 'Mitigeurs de lavabo, plusieurs finitions' }],
+    shortDescription: 'Mitigeur — chromé, noir, doré.',
+    description:
+      "Mitigeur de lavabo, hauteurs standard et surélevée selon modèle. Finitions chromé, noir mat, doré brossé, cuivré…",
+    specifications: { Type: 'Mitigeur lavabo', Finitions: 'Chromé / Noir / Doré / Cuivré' },
+  },
+
+  // ===== PORTES =====
+  {
+    id: 'porte-bois-fonce',
+    slug: 'porte-bois-fonce-premium',
+    sku: 'BDS-POR-001',
+    name: 'Porte Bois Foncé Premium',
+    categoryId: 'portes',
+    brand: 'Kelly',
+    price: 250000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/porte_bois_fonce.jpeg', alt: 'Porte en bois foncé avec insert noir vertical' }],
+    shortDescription: 'Insert vertical noir, finition haut de gamme.',
+    description:
+      "Porte intérieure premium en finition bois foncé strié avec insert vertical noir et quincaillerie noire. Fabrication soignée, rendu haut de gamme.",
+    specifications: { Type: 'Porte intérieure', Finition: 'Bois foncé', Insert: 'Noir vertical', Marque: 'Kelly' },
+  },
+  {
+    id: 'porte-grise',
+    slug: 'porte-grise-moderne',
+    sku: 'BDS-POR-002',
+    name: 'Porte Grise Moderne',
+    categoryId: 'portes',
+    brand: 'Kelly',
+    price: 150000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/porte_grise.jpeg', alt: 'Porte intérieure grise moderne' }],
+    shortDescription: 'Porte intérieure, poignée noire.',
+    description:
+      "Porte intérieure en finition grise striée avec poignée noire. Sobre et moderne, s'accorde avec tous les intérieurs.",
+    specifications: { Type: 'Porte intérieure', Finition: 'Gris', Poignée: 'Noire', Marque: 'Kelly' },
+  },
+  {
+    id: 'porte-blanche',
+    slug: 'porte-blanche-design',
+    sku: 'BDS-POR-003',
+    name: 'Porte Blanche Design',
+    categoryId: 'portes',
+    brand: 'Kelly',
+    price: 175000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/porte_blanche.jpeg', alt: 'Porte intérieure blanche avec lignes décoratives' }],
+    shortDescription: 'Lignes décoratives, poignée noire.',
+    description:
+      "Porte intérieure blanche à lignes décoratives horizontales, poignée noire contrastée. Lumineuse et élégante.",
+    specifications: { Type: 'Porte intérieure', Finition: 'Blanc', Poignée: 'Noire', Marque: 'Kelly' },
+  },
+
+  // ===== DÉCO & MAISON =====
+  {
+    id: 'miroir-cercle',
+    slug: 'miroir-cercle',
+    sku: 'BDS-DEC-001',
+    name: 'Miroir Cercle',
+    categoryId: 'deco',
+    price: 20000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/miroir_cercle.jpeg', alt: 'Miroir rond avec cadre noir' }],
+    shortDescription: 'Cadre noir fin, style moderne.',
+    description:
+      "Miroir rond à cadre noir fin. Agrandit visuellement la pièce, parfait au-dessus d'une vasque ou dans une entrée.",
+    specifications: { Forme: 'Ronde', Cadre: 'Noir fin' },
+  },
+  {
+    id: 'vase-vert',
+    slug: 'vase-deco-vert',
+    sku: 'BDS-DEC-002',
+    name: 'Vase Déco Vert',
+    categoryId: 'deco',
+    price: 10000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/vase_vert.jpeg', alt: 'Vases décoratifs en verre vert' }],
+    shortDescription: 'Verre dépoli, plusieurs formes.',
+    description:
+      "Vase décoratif en verre dépoli vert, plusieurs formes disponibles (torsadé, strié, boule…). Avec ou sans fleurs artificielles.",
+    specifications: { Matériau: 'Verre dépoli', Couleur: 'Vert', Formes: 'Plusieurs' },
+  },
+  {
+    id: 'vases-ensemble',
+    slug: 'vases-decoratifs',
+    sku: 'BDS-DEC-003',
+    name: 'Vases Décoratifs',
+    categoryId: 'deco',
+    price: 10000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/vases_ensemble.jpeg', alt: 'Ensemble de vases décoratifs avec fleurs' }],
+    shortDescription: 'Grand choix de modèles et couleurs.',
+    description:
+      "Grand choix de vases décoratifs en verre : teintes vertes, ambrées, transparentes ; formes boule, amphore, strie… Prix à l'unité.",
+    specifications: { Matériau: 'Verre', Modèles: 'Plusieurs', Prix: "À l'unité" },
+  },
+  {
+    id: 'descente-lit-rose',
+    slug: 'descente-de-lit-rose',
+    sku: 'BDS-DEC-004',
+    name: 'Descente de Lit Rose',
+    categoryId: 'deco',
+    price: 12500,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/descente_lit_rose.jpeg', alt: 'Descente de lit en fourrure rose' }],
+    shortDescription: 'Fourrure douce et confortable.',
+    description:
+      "Descente de lit en fourrure synthétique rose, toucher ultra doux. Apporte chaleur et confort au pied du lit.",
+    specifications: { Matériau: 'Fourrure synthétique', Couleur: 'Rose' },
+  },
+  {
+    id: 'descente-lit-bleue',
+    slug: 'descente-de-lit-bleue',
+    sku: 'BDS-DEC-005',
+    name: 'Descente de Lit Bleue',
+    categoryId: 'deco',
+    price: 12500,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/descente_lit_bleue.jpeg', alt: 'Descente de lit en fourrure bleu-gris' }],
+    shortDescription: 'Fourrure douce, coloris bleu-gris.',
+    description:
+      "Descente de lit en fourrure synthétique bleu-gris, toucher moelleux. Existe en plusieurs coloris.",
+    specifications: { Matériau: 'Fourrure synthétique', Couleur: 'Bleu-gris' },
+  },
+  {
+    id: 'descente-lit-beige',
+    slug: 'descente-de-lit-beige',
+    sku: 'BDS-DEC-006',
+    name: 'Descente de Lit Beige',
+    categoryId: 'deco',
+    price: 12500,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [{ src: '/products/descente_lit_beige.jpeg', alt: 'Descente de lit en fourrure beige' }],
+    shortDescription: 'Fourrure douce, coloris beige.',
+    description:
+      "Descente de lit en fourrure synthétique beige, douce et chaleureuse. Coloris neutre qui s'accorde partout.",
+    specifications: { Matériau: 'Fourrure synthétique', Couleur: 'Beige' },
+  },
+  {
+    id: 'chambre-a-coucher',
+    slug: 'chambre-a-coucher-complete',
+    sku: 'BDS-DEC-007',
+    name: 'Chambre à Coucher Complète',
+    categoryId: 'deco',
+    price: 999000,
+    currency: 'XOF',
+    stockStatus: 'in_stock',
+    images: [
+      { src: '/brand/chambre-hero.png', alt: 'Chambre à coucher complète : lit, armoire à miroirs et commode' },
+      { src: '/products/chambre_a_coucher.jpeg', alt: 'Chambre à coucher complète exposée en magasin' },
+    ],
+    shortDescription: 'Lit, armoire, table et chaises.',
+    description:
+      "Ensemble chambre à coucher complet haut de gamme : lit avec tête capitonnée, grande armoire à miroirs, table ronde effet marbre et chaises. Livraison et installation à discuter.",
+    specifications: { Composition: 'Lit + armoire + table + chaises', Style: 'Moderne premium' },
+  },
+];
+
+export function getProduct(idOrSlug: string): Product | undefined {
+  return products.find((p) => p.id === idOrSlug || p.slug === idOrSlug);
+}
+
+export function getProductsByCategory(categoryId: string): Product[] {
+  return products.filter((p) => p.categoryId === categoryId);
+}

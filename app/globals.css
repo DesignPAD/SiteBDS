@@ -1,26 +1,34 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* Palette BDS — enseigne + couleurs fournies */
+  --color-brand: #ff8f00; /* orange ambre — CTA principal */
+  --color-brand-dark: #e07d00;
+  --color-sun: #fbc02d; /* jaune — badges, accents */
+  --color-navy: #16233b; /* bleu nuit de l'enseigne — header/footer/texte fort */
+  --color-navy-light: #22304d;
+  --color-royal: #3874ff; /* bleu vif — liens, infos */
+  --color-sand: #e5cb90; /* sable — fonds doux */
+  --color-cream: #faf8f4; /* fond de page neutre chaud */
+  --color-ink: #1c2436; /* texte principal */
+  --color-muted: #5b6474; /* texte secondaire */
+  --color-line: #e8e4dc; /* bordures */
+  --color-success: #1a7f4b;
+  --color-danger: #d64545;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --radius-card: 1rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Focus visible accessible partout */
+:focus-visible {
+  outline: 2px solid var(--color-royal);
+  outline-offset: 2px;
 }
