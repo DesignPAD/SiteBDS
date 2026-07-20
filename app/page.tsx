@@ -79,10 +79,10 @@ export default function Home() {
           </div>
           <div className="overflow-hidden rounded-card">
             <Image
-              src="/products/chambre_a_coucher.jpeg"
-              alt="Chambre à coucher complète exposée dans notre showroom"
-              width={760}
-              height={740}
+              src="/brand/chambre-hero.png"
+              alt="Chambre à coucher complète disponible chez BDS Équipements"
+              width={1080}
+              height={715}
               priority
               className="h-full w-full object-cover"
             />

@@ -571,7 +571,10 @@ export const products: Product[] = [
     price: 999000,
     currency: 'XOF',
     stockStatus: 'in_stock',
-    images: [{ src: '/products/chambre_a_coucher.jpeg', alt: 'Chambre à coucher complète : lit, armoire et décoration' }],
+    images: [
+      { src: '/brand/chambre-hero.png', alt: 'Chambre à coucher complète : lit, armoire à miroirs et commode' },
+      { src: '/products/chambre_a_coucher.jpeg', alt: 'Chambre à coucher complète exposée en magasin' },
+    ],
     shortDescription: 'Lit, armoire, table et chaises.',
     description:
       "Ensemble chambre à coucher complet haut de gamme : lit avec tête capitonnée, grande armoire à miroirs, table ronde effet marbre et chaises. Livraison et installation à discuter.",

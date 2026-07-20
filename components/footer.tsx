@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { categories } from '@/data/categories';
 import { site, waLink } from '@/lib/site';
@@ -7,7 +8,14 @@ export function Footer() {
     <footer className="mt-16 bg-navy text-white">
       <div className="mx-auto max-w-7xl px-4 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="text-lg font-extrabold">
+          <Image
+            src="/brand/logo-bds.png"
+            alt="Logo BDS Équipements"
+            width={140}
+            height={93}
+            className="w-32 rounded-lg"
+          />
+          <p className="mt-3 text-lg font-extrabold">
             BDS <span className="text-sun">Équipements</span>
           </p>
           <p className="mt-1 text-sm italic text-white/80">« {site.tagline} »</p>
