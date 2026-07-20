@@ -44,10 +44,39 @@ const benefits = [
 export default function Home() {
   return (
     <div>
-      {/* Hero — une seule promesse, vraie photo produit */}
-      <section className="bg-navy text-white">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 lg:grid-cols-2 lg:py-20">
-          <div>
+      {/* Hero — une seule promesse, collage produits en fond immersif */}
+      <section className="relative isolate flex min-h-[88vh] items-center overflow-hidden text-white">
+        {/* Fond : collage produits (l'image n'est pas retouchée, uniquement des calques CSS) */}
+        <Image
+          src="/brand/background-hero.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="-z-20 object-cover"
+        />
+        {/* Dégradé gauche → droite : lisible à gauche, collage révélé à droite */}
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              'linear-gradient(to right, rgba(11,23,48,.80) 0%, rgba(11,23,48,.45) 50%, rgba(11,23,48,.15) 100%)',
+          }}
+        />
+        {/* Vignette douce + fondu bas de section */}
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, transparent 55%, rgba(4,10,24,.30) 100%), linear-gradient(to bottom, transparent 72%, rgba(11,23,48,.65) 100%)',
+          }}
+        />
+
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-8 px-4 py-16 lg:grid-cols-2 lg:py-20">
+          {/* Panneau texte : voile navy 70% + léger flou uniquement derrière le contenu */}
+          <div className="rounded-card bg-[#0B1730]/70 p-7 backdrop-blur-[5px] sm:p-9">
             <p className="mb-3 inline-block rounded-full bg-sun/20 px-3 py-1 text-sm font-semibold text-sun">
               Quincaillerie & équipement maison — Dakar
             </p>
@@ -77,15 +106,27 @@ export default function Home() {
               </a>
             </div>
           </div>
-          <div className="overflow-hidden rounded-card">
-            <Image
-              src="/brand/chambre-hero.png"
-              alt="Chambre à coucher complète disponible chez BDS Équipements"
-              width={1080}
-              height={715}
-              priority
-              className="h-full w-full object-cover"
+
+          {/* Produit vedette : halo lumineux radial doux derrière la carte */}
+          <div className="relative">
+            <div
+              aria-hidden
+              className="absolute -inset-10 -z-10"
+              style={{
+                background:
+                  'radial-gradient(closest-side, rgba(251,192,45,.28), rgba(56,116,255,.10) 60%, transparent 75%)',
+              }}
             />
+            <div className="overflow-hidden rounded-card shadow-2xl shadow-black/40 ring-1 ring-white/15">
+              <Image
+                src="/brand/chambre-hero.png"
+                alt="Chambre à coucher complète disponible chez BDS Équipements"
+                width={1080}
+                height={715}
+                priority
+                className="h-full w-full object-cover"
+              />
+            </div>
           </div>
         </div>
       </section>
