@@ -61,7 +61,7 @@ export function ProductActions({ product }: { product: Product }) {
               setAdded(true);
               setTimeout(() => setAdded(false), 1800);
             }}
-            className="flex-1 rounded-full bg-brand px-6 py-3 text-center font-bold text-white transition hover:bg-brand-dark"
+            className="flex-1 rounded-full bg-brand px-6 py-3 text-center font-bold text-navy transition hover:bg-brand-dark"
           >
             {added ? '✓ Ajouté au panier' : 'Ajouter au panier'}
           </button>

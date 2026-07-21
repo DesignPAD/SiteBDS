@@ -64,7 +64,7 @@ export function Hero() {
           <div className="bds-rise mt-8 flex flex-wrap gap-3">
             <Link
               href="/boutique"
-              className="rounded-full bg-brand px-7 py-3.5 font-bold text-white transition hover:bg-brand-dark"
+              className="rounded-full bg-brand px-7 py-3.5 font-bold text-navy transition hover:bg-brand-dark"
             >
               Voir le catalogue
             </Link>

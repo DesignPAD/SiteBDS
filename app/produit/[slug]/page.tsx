@@ -197,7 +197,7 @@ export default async function ProductPage({ params }: { params: Params }) {
       {similar.length > 0 && (
         <section className="mt-12">
           <h2 className="text-2xl font-extrabold text-navy">
-            Produits <span className="text-brand">similaires</span>
+            Produits <span className="text-brand-ink">similaires</span>
           </h2>
           <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {similar.map((p) => (

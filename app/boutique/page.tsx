@@ -132,6 +132,8 @@ export default async function BoutiquePage({ searchParams }: { searchParams: Sea
       </div>
 
       {/* Grille ou état vide */}
+      {/* Titre de niveau 2 pour conserver la hiérarchie h1 → h2 → h3 (cartes produit). */}
+      <h2 className="sr-only">Résultats</h2>
       {list.length > 0 ? (
         <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {list.map((p) => (
@@ -147,7 +149,7 @@ export default async function BoutiquePage({ searchParams }: { searchParams: Sea
           </p>
           <Link
             href="/boutique"
-            className="mt-4 inline-block rounded-full bg-brand px-6 py-2.5 font-bold text-white hover:bg-brand-dark"
+            className="mt-4 inline-block rounded-full bg-brand px-6 py-2.5 font-bold text-navy hover:bg-brand-dark"
           >
             Voir tous les produits
           </Link>

@@ -53,7 +53,7 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-4 py-12">
         <div className="mb-6 flex items-end justify-between">
           <h2 className="text-2xl font-extrabold text-navy sm:text-3xl">
-            Nos <span className="text-brand">catégories</span>
+            Nos <span className="text-brand-ink">catégories</span>
           </h2>
           <Link href="/boutique" className="text-sm font-bold text-royal hover:underline">
             Tout voir →
@@ -71,7 +71,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4">
           <div className="mb-6 flex items-end justify-between">
             <h2 className="text-2xl font-extrabold text-navy sm:text-3xl">
-              Produits <span className="text-brand">populaires</span>
+              Produits <span className="text-brand-ink">populaires</span>
             </h2>
             <Link href="/boutique" className="text-sm font-bold text-royal hover:underline">
               Toute la boutique →

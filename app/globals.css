@@ -2,8 +2,9 @@
 
 @theme {
   /* Palette BDS — enseigne + couleurs fournies */
-  --color-brand: #ff8f00; /* orange ambre — CTA principal */
-  --color-brand-dark: #e07d00;
+  --color-brand: #ff8f00; /* orange ambre vif — fonds de CTA/badges */
+  --color-brand-dark: #e07d00; /* survol des CTA */
+  --color-brand-ink: #b45309; /* orange foncé pour le TEXTE orange sur fond clair (contraste AA) */
   --color-sun: #fbc02d; /* jaune — badges, accents */
   --color-navy: #16233b; /* bleu nuit de l'enseigne — header/footer/texte fort */
   --color-navy-light: #22304d;

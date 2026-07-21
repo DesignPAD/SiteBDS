@@ -58,7 +58,7 @@ export default function CartPage() {
           </p>
           <Link
             href="/boutique"
-            className="mt-5 inline-block rounded-full bg-brand px-7 py-3 font-bold text-white hover:bg-brand-dark"
+            className="mt-5 inline-block rounded-full bg-brand px-7 py-3 font-bold text-navy hover:bg-brand-dark"
           >
             Voir la boutique
           </Link>

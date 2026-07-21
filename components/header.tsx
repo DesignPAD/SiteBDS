@@ -100,7 +100,7 @@ export function Header() {
                 key={l.href}
                 href={l.href}
                 aria-current={active ? 'page' : undefined}
-                className={active ? 'text-brand' : 'hover:text-brand'}
+                className={active ? 'text-brand-ink' : 'hover:text-brand'}
               >
                 {l.label}
               </Link>
@@ -132,7 +132,7 @@ export function Header() {
               <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
             </svg>
             {count > 0 && (
-              <span className="absolute -top-1 -right-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand px-1 text-[0.65rem] font-bold text-white">
+              <span className="absolute -top-1 -right-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand px-1 text-[0.65rem] font-bold text-navy">
                 {count}
               </span>
             )}

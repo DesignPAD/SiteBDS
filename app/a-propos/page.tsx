@@ -15,7 +15,7 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="text-3xl font-extrabold text-navy">À propos de {site.name}</h1>
-      <p className="mt-2 text-lg italic text-brand font-semibold">« {site.tagline} »</p>
+      <p className="mt-2 text-lg italic text-brand-ink font-semibold">« {site.tagline} »</p>
 
       <div className="mt-6 space-y-4 text-muted leading-relaxed">
         <p>
@@ -50,7 +50,7 @@ export default function AboutPage() {
 
       <Link
         href="/boutique"
-        className="mt-8 inline-block rounded-full bg-brand px-7 py-3 font-bold text-white hover:bg-brand-dark"
+        className="mt-8 inline-block rounded-full bg-brand px-7 py-3 font-bold text-navy hover:bg-brand-dark"
       >
         Découvrir la boutique
       </Link>
