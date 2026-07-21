@@ -1,15 +1,17 @@
 import type { Metadata } from 'next';
 import { site, waLink } from '@/lib/site';
+import { DeliveryIcon } from '@/components/delivery-icon';
 
 export const metadata: Metadata = {
   title: 'Services — Livraison, conseil et devis',
   description:
     'Les services BDS Équipements à Dakar : livraison, conseil avant achat, commande assistée et devis pour particuliers, artisans et chantiers.',
+  alternates: { canonical: '/services' },
 };
 
 const services = [
   {
-    icon: '🚚',
+    icon: <DeliveryIcon className="h-6 w-6 text-sun" />,
     title: 'Livraison à Dakar et environs',
     text: 'Nous livrons vos matériaux et équipements. Le délai et le coût sont confirmés au moment de la commande, selon votre quartier et le volume.',
   },
@@ -32,7 +34,7 @@ const services = [
 
 export default function ServicesPage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10">
+    <div className="mx-auto max-w-5xl px-5 sm:px-6 py-10">
       <h1 className="text-3xl font-extrabold text-navy">Nos services</h1>
       <p className="mt-2 max-w-2xl text-muted">
         Du choix du produit à la livraison chez vous : nous accompagnons

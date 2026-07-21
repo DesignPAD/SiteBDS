@@ -3,9 +3,9 @@ import Link from 'next/link';
 
 export function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-2.5 shrink-0" aria-label="BDS Équipements — Accueil">
+    <Link href="/" className="flex items-center gap-2.5 shrink-0">
       <Image
-        src="/brand/logo-bds.png"
+        src="/brand/logo-bds.jpg"
         alt=""
         width={66}
         height={44}

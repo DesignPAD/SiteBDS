@@ -9,7 +9,9 @@ const config: Record<StockStatus, { label: string; className: string }> = {
 export function StockBadge({ status }: { status: StockStatus }) {
   const { label, className } = config[status];
   return (
-    <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${className}`}>
+    <span
+      className={`inline-block rounded-full px-2.5 py-1 text-[11px] font-semibold tracking-wide ${className}`}
+    >
       {label}
     </span>
   );

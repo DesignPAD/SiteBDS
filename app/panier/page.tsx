@@ -29,22 +29,28 @@ export default function CartPage() {
 
   const order = () => {
     setError(null);
+    // On ouvre l'onglet DANS le geste utilisateur (sinon bloqué par le
+    // navigateur car window.open arriverait après l'await). On le redirige
+    // une fois que le serveur a validé et recalculé la commande.
+    const win = window.open('', '_blank', 'noopener,noreferrer');
     startTransition(async () => {
       const result = await buildWhatsappOrder(items.map(({ id, qty }) => ({ id, qty })));
       if (result.ok) {
-        window.open(result.whatsappUrl, '_blank', 'noopener,noreferrer');
+        if (win) win.location.href = result.whatsappUrl;
+        else window.location.href = result.whatsappUrl;
       } else {
+        win?.close();
         setError(result.error);
       }
     });
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-auto max-w-4xl px-5 sm:px-6 py-8">
       <h1 className="text-3xl font-extrabold text-navy">Votre panier</h1>
 
       {lines.length === 0 ? (
-        <div className="mt-8 rounded-card border border-line bg-white p-10 text-center">
+        <div className="mt-8 rounded-card border border-line bg-white p-10 text-center shadow-card sm:p-14">
           <p className="text-lg font-bold text-navy">Votre panier est vide</p>
           <p className="mt-2 text-sm text-muted">
             Parcourez la boutique et ajoutez vos produits — la commande se
@@ -52,14 +58,14 @@ export default function CartPage() {
           </p>
           <Link
             href="/boutique"
-            className="mt-5 inline-block rounded-full bg-brand px-7 py-3 font-bold text-white hover:bg-brand-dark"
+            className="mt-6 inline-block rounded-full bg-brand px-7 py-3 font-bold text-navy shadow-btn transition-[background-color,box-shadow,transform] duration-200 ease-smooth hover:bg-brand-dark hover:shadow-btn-hover active:scale-[0.98]"
           >
             Voir la boutique
           </Link>
         </div>
       ) : (
         <>
-          <ul className="mt-6 divide-y divide-line rounded-card border border-line bg-white">
+          <ul className="mt-8 divide-y divide-line rounded-card border border-line bg-white shadow-card">
             {lines.map(({ item, product }) => (
               <li key={item.id} className="flex items-center gap-4 p-4">
                 <Link
@@ -124,7 +130,7 @@ export default function CartPage() {
             ))}
           </ul>
 
-          <div className="mt-6 rounded-card border border-line bg-white p-6">
+          <div className="mt-6 rounded-card border border-line bg-white p-6 shadow-card sm:p-7">
             <div className="flex items-center justify-between text-lg">
               <p className="font-bold text-ink">Total estimé</p>
               <p className="font-extrabold text-navy">{formatFCFA(total)}</p>
@@ -150,13 +156,13 @@ export default function CartPage() {
                 type="button"
                 onClick={order}
                 disabled={pending}
-                className="flex-1 rounded-full bg-success px-6 py-3.5 font-bold text-white transition hover:opacity-90 disabled:opacity-50"
+                className="flex-1 rounded-full bg-success px-6 py-3.5 font-bold text-white shadow-btn transition-[opacity,box-shadow,transform] duration-200 ease-smooth hover:opacity-90 active:scale-[0.98] disabled:opacity-50 disabled:shadow-none"
               >
                 {pending ? 'Préparation…' : 'Commander sur WhatsApp'}
               </button>
               <Link
                 href="/boutique"
-                className="rounded-full border-2 border-navy px-6 py-3 text-center font-bold text-navy hover:bg-navy hover:text-white"
+                className="rounded-full border border-navy px-6 py-3 text-center font-bold text-navy transition-colors duration-200 ease-smooth hover:bg-navy hover:text-white active:scale-[0.98]"
               >
                 Continuer mes achats
               </Link>

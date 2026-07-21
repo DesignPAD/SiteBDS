@@ -1,11 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
 import { categories } from '@/data/categories';
 import { useCart } from '@/lib/cart-context';
 import { site, waLink } from '@/lib/site';
 import { Logo } from './logo';
+import { SearchForm } from './search-form';
 
 const navLinks = [
   { href: '/boutique', label: 'Boutique' },
@@ -17,18 +19,64 @@ const navLinks = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const { count } = useCart();
+  const pathname = usePathname();
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLButtonElement>(null);
+
+  // Drawer mobile : verrou du défilement, fermeture au clavier (Échap), piège de
+  // focus (Tab reste dans le panneau) et restitution du focus à la fermeture.
+  useEffect(() => {
+    if (!open) return;
+    const opener = openerRef.current;
+    const focusables = () =>
+      Array.from(
+        drawerRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      );
+    focusables()[0]?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        return;
+      }
+      if (e.key === 'Tab') {
+        const items = focusables();
+        if (items.length === 0) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+      opener?.focus();
+    };
+  }, [open]);
 
   return (
-    <header className="sticky top-0 z-40 bg-white shadow-sm">
-      <div className="mx-auto max-w-7xl px-4 py-3 flex items-center gap-3 sm:gap-6">
+    <header className="sticky top-0 z-40 border-b border-line bg-white">
+      <div className="mx-auto flex max-w-7xl items-center gap-3 px-5 py-3 sm:gap-6 sm:px-6 lg:px-8">
         <button
+          ref={openerRef}
           type="button"
           onClick={() => setOpen(true)}
           className="lg:hidden p-2 -ml-2 text-navy"
           aria-label="Ouvrir le menu"
           aria-expanded={open}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
             <line x1="4" y1="6" x2="20" y2="6" />
             <line x1="4" y1="12" x2="20" y2="12" />
             <line x1="4" y1="18" x2="20" y2="18" />
@@ -37,36 +85,27 @@ export function Header() {
 
         <Logo />
 
-        {/* Recherche — fonctionne sans JavaScript (GET /boutique?q=) */}
-        <form action="/boutique" className="hidden md:flex flex-1 max-w-xl" role="search">
-          <label htmlFor="site-search" className="sr-only">
-            Rechercher un produit
-          </label>
-          <input
-            id="site-search"
-            name="q"
-            type="search"
-            placeholder="Que recherchez-vous ? (nom, référence…)"
-            className="w-full rounded-l-full border border-line bg-cream px-5 py-2.5 text-sm focus:border-brand"
-          />
-          <button
-            type="submit"
-            className="rounded-r-full bg-navy px-5 text-white hover:bg-navy-light"
-            aria-label="Rechercher"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <circle cx="11" cy="11" r="7" />
-              <line x1="21" y1="21" x2="16.5" y2="16.5" />
-            </svg>
-          </button>
-        </form>
+        {/* Recherche bureau */}
+        <SearchForm
+          id="site-search"
+          placeholder="Que recherchez-vous ? (nom, référence…)"
+          className="hidden md:flex flex-1 max-w-xl"
+        />
 
         <nav className="hidden lg:flex items-center gap-5 text-sm font-semibold text-navy ml-auto">
-          {navLinks.map((l) => (
-            <Link key={l.href} href={l.href} className="hover:text-brand">
-              {l.label}
-            </Link>
-          ))}
+          {navLinks.map((l) => {
+            const active = pathname === l.href;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={active ? 'page' : undefined}
+                className={active ? 'text-brand-ink' : 'hover:text-brand'}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2 ml-auto lg:ml-0">
@@ -87,13 +126,13 @@ export function Header() {
             className="relative grid h-10 w-10 place-items-center rounded-full bg-cream text-navy hover:bg-sand/40"
             aria-label={`Panier, ${count} article${count > 1 ? 's' : ''}`}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="8" cy="21" r="1" />
               <circle cx="19" cy="21" r="1" />
               <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
             </svg>
             {count > 0 && (
-              <span className="absolute -top-1 -right-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand px-1 text-[0.65rem] font-bold text-white">
+              <span className="absolute -top-1 -right-1 grid h-5 min-w-5 place-items-center rounded-full bg-brand px-1 text-[0.65rem] font-bold text-navy">
                 {count}
               </span>
             )}
@@ -102,26 +141,7 @@ export function Header() {
       </div>
 
       {/* Recherche mobile */}
-      <form action="/boutique" className="md:hidden px-4 pb-3" role="search">
-        <label htmlFor="site-search-mobile" className="sr-only">
-          Rechercher un produit
-        </label>
-        <div className="flex">
-          <input
-            id="site-search-mobile"
-            name="q"
-            type="search"
-            placeholder="Que recherchez-vous ?"
-            className="w-full rounded-l-full border border-line bg-cream px-4 py-2 text-sm"
-          />
-          <button type="submit" className="rounded-r-full bg-navy px-4 text-white" aria-label="Rechercher">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <circle cx="11" cy="11" r="7" />
-              <line x1="21" y1="21" x2="16.5" y2="16.5" />
-            </svg>
-          </button>
-        </div>
-      </form>
+      <SearchForm id="site-search-mobile" size="sm" className="md:hidden px-4 pb-3" />
 
       {/* Drawer catégories mobile */}
       {open && (
@@ -132,7 +152,7 @@ export function Header() {
             aria-label="Fermer le menu"
             onClick={() => setOpen(false)}
           />
-          <div className="absolute inset-y-0 left-0 w-80 max-w-[85%] bg-white p-6 overflow-y-auto">
+          <div ref={drawerRef} className="absolute inset-y-0 left-0 w-80 max-w-[85%] bg-white p-6 overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
               <p className="text-lg font-extrabold text-navy">Nos catégories</p>
               <button
