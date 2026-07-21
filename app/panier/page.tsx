@@ -29,11 +29,17 @@ export default function CartPage() {
 
   const order = () => {
     setError(null);
+    // On ouvre l'onglet DANS le geste utilisateur (sinon bloqué par le
+    // navigateur car window.open arriverait après l'await). On le redirige
+    // une fois que le serveur a validé et recalculé la commande.
+    const win = window.open('', '_blank', 'noopener,noreferrer');
     startTransition(async () => {
       const result = await buildWhatsappOrder(items.map(({ id, qty }) => ({ id, qty })));
       if (result.ok) {
-        window.open(result.whatsappUrl, '_blank', 'noopener,noreferrer');
+        if (win) win.location.href = result.whatsappUrl;
+        else window.location.href = result.whatsappUrl;
       } else {
+        win?.close();
         setError(result.error);
       }
     });

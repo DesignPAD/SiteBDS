@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { categories } from '@/data/categories';
+import { LocationIcon } from '@/components/location-icon';
+import { PhoneCompactIcon } from '@/components/phone-compact-icon';
 import { site, waLink } from '@/lib/site';
 
 export function Footer() {
@@ -9,7 +11,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Image
-            src="/brand/logo-bds.png"
+            src="/brand/logo-bds.jpg"
             alt="Logo BDS Équipements"
             width={140}
             height={93}
@@ -52,10 +54,14 @@ export function Footer() {
         <div>
           <p className="font-bold mb-3 text-sun">Nous contacter</p>
           <ul className="space-y-2 text-sm text-white/80">
-            <li>📍 {site.address}</li>
+            <li className="flex items-start gap-2">
+              <LocationIcon className="mt-0.5 h-4 w-4 shrink-0 text-sun" />
+              <span>{site.address}</span>
+            </li>
             {site.phones.map((p) => (
-              <li key={p}>
-                📞 <a href={`tel:${p.replace(/\s/g, '')}`} className="hover:text-white">{p}</a>
+              <li key={p} className="flex items-start gap-2">
+                <PhoneCompactIcon className="mt-0.5 h-4 w-4 shrink-0 text-sun" />
+                <a href={`tel:${p.replace(/\s/g, '')}`} className="hover:text-white">{p}</a>
               </li>
             ))}
             <li>

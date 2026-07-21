@@ -35,7 +35,7 @@ export function Hero() {
         style={{ willChange: 'transform' }}
       >
         <Image
-          src="/brand/background-hero.png"
+          src="/brand/background-hero.jpg"
           alt=""
           fill
           priority
@@ -127,7 +127,7 @@ export function Hero() {
             style={{ willChange: 'transform' }}
           >
             <Image
-              src="/brand/chambre-hero.png"
+              src="/brand/chambre-hero.jpg"
               alt="Chambre à coucher complète disponible chez BDS Équipements"
               width={1080}
               height={715}

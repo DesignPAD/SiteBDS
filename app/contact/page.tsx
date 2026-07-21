@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { LocationIcon } from '@/components/location-icon';
+import { PhoneIcon } from '@/components/phone-icon';
 import { site, waLink } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -29,8 +31,10 @@ export default function ContactPage() {
           <p className="text-sm text-muted">{site.phones[1]}</p>
         </a>
         <div className="rounded-card border border-line bg-white p-6">
-          <p className="text-2xl" aria-hidden>📞</p>
-          <p className="mt-2 font-extrabold text-navy">Téléphone</p>
+          <div className="flex items-center gap-2">
+            <PhoneIcon className="h-6 w-6 text-sun" />
+            <p className="font-extrabold text-navy">Téléphone</p>
+          </div>
           {site.phones.map((p) => (
             <p key={p} className="mt-1 text-sm">
               <a href={`tel:${p.replace(/\s/g, '')}`} className="text-royal hover:underline">
@@ -40,8 +44,10 @@ export default function ContactPage() {
           ))}
         </div>
         <div className="rounded-card border border-line bg-white p-6 sm:col-span-2">
-          <p className="text-2xl" aria-hidden>📍</p>
-          <p className="mt-2 font-extrabold text-navy">Le magasin</p>
+          <div className="flex items-center gap-2">
+            <LocationIcon className="h-6 w-6 text-sun" />
+            <p className="font-extrabold text-navy">Le magasin</p>
+          </div>
           <p className="mt-1 text-sm text-muted">{site.address}</p>
           <p className="mt-2 text-sm text-muted">
             Expo-vente : matériaux de construction, sanitaire, luminaires,

@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { categories } from '@/data/categories';
 import { useCart } from '@/lib/cart-context';
 import { site, waLink } from '@/lib/site';
@@ -17,6 +18,21 @@ const navLinks = [
 export function Header() {
   const [open, setOpen] = useState(false);
   const { count } = useCart();
+  const pathname = usePathname();
+
+  // Drawer mobile : fermeture au clavier (Échap) + verrou du défilement de fond.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
   return (
     <header className="sticky top-0 z-40 bg-white shadow-sm">
@@ -62,11 +78,19 @@ export function Header() {
         </form>
 
         <nav className="hidden lg:flex items-center gap-5 text-sm font-semibold text-navy ml-auto">
-          {navLinks.map((l) => (
-            <Link key={l.href} href={l.href} className="hover:text-brand">
-              {l.label}
-            </Link>
-          ))}
+          {navLinks.map((l) => {
+            const active = pathname === l.href;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={active ? 'page' : undefined}
+                className={active ? 'text-brand' : 'hover:text-brand'}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-2 ml-auto lg:ml-0">

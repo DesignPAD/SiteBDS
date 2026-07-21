@@ -572,7 +572,7 @@ export const products: Product[] = [
     currency: 'XOF',
     stockStatus: 'in_stock',
     images: [
-      { src: '/brand/chambre-hero.png', alt: 'Chambre à coucher complète : lit, armoire à miroirs et commode' },
+      { src: '/brand/chambre-hero.jpg', alt: 'Chambre à coucher complète : lit, armoire à miroirs et commode' },
       { src: '/products/chambre_a_coucher.jpeg', alt: 'Chambre à coucher complète exposée en magasin' },
     ],
     shortDescription: 'Lit, armoire, table et chaises.',

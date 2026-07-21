@@ -6,6 +6,7 @@ import { Price } from '@/components/price';
 import { ProductActions } from '@/components/product-actions';
 import { ProductCard } from '@/components/product-card';
 import { StockBadge } from '@/components/stock-badge';
+import { JsonLd } from '@/components/json-ld';
 import { getCategory } from '@/data/categories';
 import { getProduct, getProductsByCategory, products } from '@/data/products';
 import { site } from '@/lib/site';
@@ -37,11 +38,12 @@ export default async function ProductPage({ params }: { params: Params }) {
     .filter((p) => p.id !== product.id)
     .slice(0, 4);
 
-  const jsonLd = {
+  const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
     sku: product.sku,
+    ...(product.brand ? { brand: { '@type': 'Brand', name: product.brand } } : {}),
     image: `${site.url}${product.images[0].src}`,
     description: product.shortDescription,
     ...(product.priceOnRequest
@@ -51,6 +53,7 @@ export default async function ProductPage({ params }: { params: Params }) {
             '@type': 'Offer',
             price: product.salePrice ?? product.price,
             priceCurrency: 'XOF',
+            url: `${site.url}/produit/${product.slug}`,
             availability:
               product.stockStatus === 'out_of_stock'
                 ? 'https://schema.org/OutOfStock'
@@ -59,12 +62,35 @@ export default async function ProductPage({ params }: { params: Params }) {
         }),
   };
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Accueil', item: site.url },
+      { '@type': 'ListItem', position: 2, name: 'Boutique', item: `${site.url}/boutique` },
+      ...(category
+        ? [
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: category.name,
+              item: `${site.url}/boutique?categorie=${category.id}`,
+            },
+          ]
+        : []),
+      {
+        '@type': 'ListItem',
+        position: category ? 4 : 3,
+        name: product.name,
+        item: `${site.url}/produit/${product.slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={productJsonLd} />
+      <JsonLd data={breadcrumbJsonLd} />
 
       {/* Breadcrumbs */}
       <nav aria-label="Fil d’Ariane" className="mb-6 text-sm text-muted">
@@ -98,6 +124,7 @@ export default async function ProductPage({ params }: { params: Params }) {
             width={800}
             height={800}
             priority
+            sizes="(min-width: 1024px) 45vw, 100vw"
             className="h-full w-full object-cover"
           />
         </div>

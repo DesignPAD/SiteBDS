@@ -27,6 +27,7 @@ export function ProductCard({ product }: { product: Product }) {
           alt={image.alt}
           width={480}
           height={480}
+          sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 90vw"
           className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
         />
       </Link>

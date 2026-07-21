@@ -1,7 +1,9 @@
-﻿import Image from 'next/image';
 import Link from 'next/link';
 import { Hero } from '@/components/hero';
 import { ProductCard } from '@/components/product-card';
+import { CategoryCard } from '@/components/category-card';
+import { DeliveryIcon } from '@/components/delivery-icon';
+import { AdviceIcon, CheckShieldIcon, StoreIcon } from '@/components/icons';
 import { categories } from '@/data/categories';
 import { products } from '@/data/products';
 import { site, waLink } from '@/lib/site';
@@ -21,24 +23,24 @@ const featured = [
 
 const benefits = [
   {
-    title: 'Produits en stock Ã  Dakar',
+    title: 'Produits en stock à Dakar',
     text: 'Ce que vous voyez sur le site est disponible dans notre magasin de Diamalaye.',
-    icon: 'ðŸª',
+    Icon: StoreIcon,
   },
   {
-    title: 'Livraison Ã  Dakar et environs',
-    text: 'Nous livrons vos matÃ©riaux et Ã©quipements â€” dÃ©lais confirmÃ©s Ã  la commande.',
-    icon: 'ðŸšš',
+    title: 'Livraison à Dakar et environs',
+    text: 'Nous livrons vos matériaux et équipements — délais confirmés à la commande.',
+    Icon: DeliveryIcon,
   },
   {
     title: 'Conseil avant achat',
-    text: 'Notre Ã©quipe vous aide Ã  choisir le bon produit pour votre projet.',
-    icon: 'ðŸ’¬',
+    text: 'Notre équipe vous aide à choisir le bon produit pour votre projet.',
+    Icon: AdviceIcon,
   },
   {
-    title: 'Commande assistÃ©e WhatsApp',
-    text: 'Composez votre panier, envoyez-le sur WhatsApp, on sâ€™occupe du reste.',
-    icon: 'âœ…',
+    title: 'Commande assistée WhatsApp',
+    text: 'Composez votre panier, envoyez-le sur WhatsApp, on s’occupe du reste.',
+    Icon: CheckShieldIcon,
   },
 ];
 
@@ -47,38 +49,19 @@ export default function Home() {
     <div>
       <Hero />
 
-      {/* CatÃ©gories */}
+      {/* Catégories */}
       <section className="mx-auto max-w-7xl px-4 py-12">
         <div className="mb-6 flex items-end justify-between">
           <h2 className="text-2xl font-extrabold text-navy sm:text-3xl">
-            Nos <span className="text-brand">catÃ©gories</span>
+            Nos <span className="text-brand">catégories</span>
           </h2>
           <Link href="/boutique" className="text-sm font-bold text-royal hover:underline">
-            Tout voir â†’
+            Tout voir →
           </Link>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           {categories.map((c) => (
-            <Link
-              key={c.id}
-              href={`/boutique?categorie=${c.id}`}
-              className="group overflow-hidden rounded-card border border-line bg-white transition hover:shadow-lg"
-            >
-              {c.image && (
-                <div className="aspect-square overflow-hidden bg-cream">
-                  <Image
-                    src={c.image}
-                    alt={c.name}
-                    width={300}
-                    height={300}
-                    className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                  />
-                </div>
-              )}
-              <p className="p-3 text-center text-sm font-bold text-ink group-hover:text-brand">
-                {c.name}
-              </p>
-            </Link>
+            <CategoryCard key={c.id} category={c} />
           ))}
         </div>
       </section>
@@ -91,7 +74,7 @@ export default function Home() {
               Produits <span className="text-brand">populaires</span>
             </h2>
             <Link href="/boutique" className="text-sm font-bold text-royal hover:underline">
-              Toute la boutique â†’
+              Toute la boutique →
             </Link>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -102,17 +85,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* BÃ©nÃ©fices */}
+      {/* Bénéfices */}
       <section className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {benefits.map((b) => (
-            <div key={b.title} className="rounded-card border border-line bg-white p-5">
-              <p className="text-2xl" aria-hidden>{b.icon}</p>
-              <p className="mt-2 font-bold text-navy">{b.title}</p>
-              <p className="mt-1 text-sm text-muted">{b.text}</p>
-            </div>
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {benefits.map(({ title, text, Icon }) => (
+            <li key={title} className="rounded-card border border-line bg-white p-5">
+              <Icon className="h-8 w-8 text-brand" />
+              <p className="mt-3 font-bold text-navy">{title}</p>
+              <p className="mt-1 text-sm text-muted">{text}</p>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
       {/* Bloc devis / WhatsApp */}
@@ -122,12 +105,12 @@ export default function Home() {
             Un projet ? Un chantier ? <span className="text-sun">Parlons-en.</span>
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-white/80">
-            Envoyez-nous votre liste de matÃ©riaux : nous prÃ©parons votre devis et
-            organisons la livraison Ã  Dakar.
+            Envoyez-nous votre liste de matériaux : nous préparons votre devis et
+            organisons la livraison à Dakar.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <a
-              href={waLink('Bonjour BDS Ã‰quipements, voici ma liste de matÃ©riaux pour un devis :')}
+              href={waLink('Bonjour BDS Équipements, voici ma liste de matériaux pour un devis :')}
               target="_blank"
               rel="noopener noreferrer"
               className="rounded-full bg-success px-7 py-3.5 font-bold text-white hover:opacity-90"

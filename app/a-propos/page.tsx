@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { LocationIcon } from '@/components/location-icon';
+import { PhoneIcon } from '@/components/phone-icon';
 import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -35,10 +37,14 @@ export default function AboutPage() {
 
       <div className="mt-8 rounded-card border border-line bg-white p-6">
         <h2 className="font-extrabold text-navy">Nous trouver</h2>
-        <p className="mt-2 text-sm text-muted">📍 {site.address}</p>
-        <p className="mt-1 text-sm text-muted">
-          📞 {site.phones.join(' · ')}
-        </p>
+        <div className="mt-2 flex items-center gap-2 text-sm text-muted">
+          <LocationIcon className="h-5 w-5 shrink-0 text-sun" />
+          <span>{site.address}</span>
+        </div>
+        <div className="mt-1 flex items-center gap-2 text-sm text-muted">
+          <PhoneIcon className="h-5 w-5 shrink-0 text-sun" />
+          <span>{site.phones.join(' · ')}</span>
+        </div>
       </div>
 
       <Link

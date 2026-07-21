@@ -85,6 +85,7 @@ export default async function BoutiquePage({ searchParams }: { searchParams: Sea
       <div className="mt-6 flex flex-wrap gap-2">
         <Link
           href={`/boutique${chipParams()}`}
+          aria-current={!activeCategory ? 'true' : undefined}
           className={`rounded-full px-4 py-2 text-sm font-bold transition ${
             !activeCategory
               ? 'bg-navy text-white'
@@ -97,6 +98,7 @@ export default async function BoutiquePage({ searchParams }: { searchParams: Sea
           <Link
             key={c.id}
             href={`/boutique${chipParams(c.id)}`}
+            aria-current={activeCategory?.id === c.id ? 'true' : undefined}
             className={`rounded-full px-4 py-2 text-sm font-bold transition ${
               activeCategory?.id === c.id
                 ? 'bg-navy text-white'

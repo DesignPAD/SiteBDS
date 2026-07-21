@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { site, waLink } from '@/lib/site';
+import { DeliveryIcon } from '@/components/delivery-icon';
 
 export const metadata: Metadata = {
   title: 'Services — Livraison, conseil et devis',
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 
 const services = [
   {
-    icon: '🚚',
+    icon: <DeliveryIcon className="h-6 w-6 text-sun" />,
     title: 'Livraison à Dakar et environs',
     text: 'Nous livrons vos matériaux et équipements. Le délai et le coût sont confirmés au moment de la commande, selon votre quartier et le volume.',
   },
