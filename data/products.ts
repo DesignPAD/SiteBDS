@@ -568,7 +568,8 @@ export const products: Product[] = [
     sku: 'BDS-DEC-007',
     name: 'Chambre à Coucher Complète',
     categoryId: 'deco',
-    price: 999000,
+    // Prix corrigé par le client (21/07/2026) : 550 000 et non 999 000.
+    price: 550000,
     currency: 'XOF',
     stockStatus: 'in_stock',
     images: [

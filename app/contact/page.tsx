@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { LocationIcon } from '@/components/location-icon';
 import { PhoneIcon } from '@/components/phone-icon';
+import { AdviceIcon } from '@/components/icons';
 import { site, waLink } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -24,10 +25,12 @@ export default function ContactPage() {
           href={waLink('Bonjour BDS Équipements !')}
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-card border border-line bg-white p-6 transition hover:shadow-lg"
+          className="rounded-card border border-line bg-white p-6 shadow-card transition-[transform,box-shadow] duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-hover"
         >
-          <p className="text-2xl" aria-hidden>💬</p>
-          <p className="mt-2 font-extrabold text-navy">WhatsApp (recommandé)</p>
+          <div className="flex items-center gap-2">
+            <AdviceIcon className="h-6 w-6 text-sun" />
+            <p className="font-extrabold text-navy">WhatsApp (recommandé)</p>
+          </div>
           <p className="mt-1 text-sm text-muted">{site.phones[0]}</p>
           <p className="text-sm text-muted">{site.phones[1]}</p>
         </a>

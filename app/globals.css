@@ -54,6 +54,15 @@ h3 {
   font-variant-numeric: tabular-nums;
 }
 
+/* Sections hors écran : le navigateur saute leur mise en page tant qu'elles ne
+   sont pas approchées, ce qui libère le fil principal pour peindre le LCP.
+   Le contenu reste dans le DOM (SEO, recherche dans la page, lecteurs d'écran).
+   contain-intrinsic-size réserve une hauteur estimée pour éviter les sauts. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
+}
+
 /* Focus visible accessible partout */
 :focus-visible {
   outline: 2px solid var(--color-royal);
@@ -97,15 +106,16 @@ html {
 @keyframes bds-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 @keyframes bds-glow { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
 
-/* Le zoom du fond est réservé au desktop : sur mobile, animer un calque plein
-   écran retarde la peinture de l'image LCP. */
+/* Les animations EN BOUCLE (zoom du fond, flottement, halo) sont réservées au
+   desktop : sur mobile elles forcent une recomposition permanente qui retarde
+   la peinture de l'image LCP. Les animations ponctuelles d'entrée restent. */
 @media (min-width: 768px) {
   .bds-kenburns { animation: bds-kenburns 8s ease-in-out infinite alternate; }
+  .bds-float { animation: bds-float 4.5s ease-in-out infinite; }
+  .bds-glow { animation: bds-glow 5s ease-in-out infinite; }
 }
 .bds-fade-in { animation: bds-fade-in 0.9s ease-out both; }
 .bds-rise { animation: bds-rise 0.7s ease-out 0.35s both; }
-.bds-float { animation: bds-float 4.5s ease-in-out infinite; will-change: transform; }
-.bds-glow { animation: bds-glow 5s ease-in-out infinite; will-change: opacity; }
 
 @media (prefers-reduced-motion: reduce) {
   .bds-kenburns, .bds-fade-in, .bds-rise, .bds-float, .bds-glow { animation: none !important; }

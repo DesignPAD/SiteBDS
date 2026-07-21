@@ -19,6 +19,7 @@ export function ProductCard({ product }: { product: Product }) {
       )}
       <Link
         href={`/produit/${product.slug}`}
+        prefetch={false}
         className="block aspect-square overflow-hidden bg-cream"
         aria-label={product.name}
       >
@@ -43,6 +44,7 @@ export function ProductCard({ product }: { product: Product }) {
         <h3 className="text-[0.9375rem] font-bold leading-snug text-ink">
           <Link
             href={`/produit/${product.slug}`}
+            prefetch={false}
             className="transition-colors duration-200 hover:text-brand-ink"
           >
             {product.name}
