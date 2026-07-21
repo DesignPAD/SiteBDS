@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useCart } from '@/lib/cart-context';
+import { useCartActions } from '@/lib/cart-context';
 
 export function AddToCartButton({
   productId,
@@ -14,7 +14,7 @@ export function AddToCartButton({
   className?: string;
   disabled?: boolean;
 }) {
-  const { add } = useCart();
+  const { add } = useCartActions();
   const [added, setAdded] = useState(false);
 
   return (

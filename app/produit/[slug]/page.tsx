@@ -17,6 +17,11 @@ export function generateStaticParams() {
   return products.map((p) => ({ slug: p.slug }));
 }
 
+// Le catalogue est entièrement connu à la compilation : toute autre référence
+// doit renvoyer un vrai 404 (sinon Next répond 200 sur une page « introuvable »,
+// ce que Google pénalise comme « soft 404 »).
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);

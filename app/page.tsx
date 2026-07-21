@@ -50,7 +50,7 @@ export default function Home() {
       <Hero />
 
       {/* Catégories */}
-      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <section className="cv-auto mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
         <div className="mb-8 flex items-end justify-between gap-4 sm:mb-10">
           <h2 className="text-2xl font-extrabold text-navy sm:text-3xl">
             Nos <span className="text-brand-ink">catégories</span>
@@ -76,7 +76,7 @@ export default function Home() {
       </section>
 
       {/* Produits populaires */}
-      <section className="border-y border-line bg-white py-16 sm:py-20">
+      <section className="cv-auto border-y border-line bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
           <div className="mb-8 flex items-end justify-between gap-4 sm:mb-10">
             <h2 className="text-2xl font-extrabold text-navy sm:text-3xl">
@@ -104,7 +104,7 @@ export default function Home() {
       </section>
 
       {/* Bénéfices */}
-      <section className="mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <section className="cv-auto mx-auto max-w-7xl px-5 py-16 sm:px-6 sm:py-20 lg:px-8">
         <ul className="grid gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {benefits.map(({ title, text, Icon }) => (
             <li
@@ -122,7 +122,7 @@ export default function Home() {
       </section>
 
       {/* Bloc devis / WhatsApp */}
-      <section className="mx-auto max-w-7xl px-5 pb-16 sm:px-6 sm:pb-20 lg:px-8">
+      <section className="cv-auto mx-auto max-w-7xl px-5 pb-16 sm:px-6 sm:pb-20 lg:px-8">
         <div className="rounded-card bg-navy px-6 py-12 text-center text-white sm:px-12 sm:py-16">
           <h2 className="text-2xl font-extrabold sm:text-3xl">
             Un projet ? Un chantier ? <span className="text-sun">Parlons-en.</span>

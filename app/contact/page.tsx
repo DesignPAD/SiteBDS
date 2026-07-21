@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { LocationIcon } from '@/components/location-icon';
 import { PhoneIcon } from '@/components/phone-icon';
+import { AdviceIcon } from '@/components/icons';
 import { site, waLink } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -20,17 +21,29 @@ export default function ContactPage() {
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <a
-          href={waLink('Bonjour BDS Équipements !')}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-card border border-line bg-white p-6 transition hover:shadow-lg"
-        >
-          <p className="text-2xl" aria-hidden>💬</p>
-          <p className="mt-2 font-extrabold text-navy">WhatsApp (recommandé)</p>
-          <p className="mt-1 text-sm text-muted">{site.phones[0]}</p>
-          <p className="text-sm text-muted">{site.phones[1]}</p>
-        </a>
+        {/* Chaque numéro ouvre SA propre conversation WhatsApp : la carte était
+            un seul lien, donc cliquer le 2e numéro écrivait au 1er. */}
+        <div className="rounded-card border border-line bg-white p-6 shadow-card">
+          <div className="flex items-center gap-2">
+            <AdviceIcon className="h-6 w-6 text-sun" />
+            <p className="font-extrabold text-navy">WhatsApp (recommandé)</p>
+          </div>
+          {[
+            { tel: site.phones[0], num: site.whatsapp },
+            { tel: site.phones[1], num: site.whatsappSecondary },
+          ].map(({ tel, num }) => (
+            <p key={tel} className="mt-1 text-sm">
+              <a
+                href={waLink('Bonjour BDS Équipements !', num)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-royal transition-colors duration-150 hover:underline"
+              >
+                {tel}
+              </a>
+            </p>
+          ))}
+        </div>
         <div className="rounded-card border border-line bg-white p-6">
           <div className="flex items-center gap-2">
             <PhoneIcon className="h-6 w-6 text-sun" />

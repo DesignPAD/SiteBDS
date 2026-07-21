@@ -6,6 +6,9 @@ export function CategoryCard({ category }: { category: Category }) {
   return (
     <Link
       href={`/boutique?categorie=${category.id}`}
+      // Pas de préchargement : ces liens sont nombreux et hors écran au
+      // chargement ; leur prefetch RSC concurrence le fil principal (LCP).
+      prefetch={false}
       className="group overflow-hidden rounded-card border border-line bg-white shadow-card transition-[transform,box-shadow] duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-hover"
     >
       {category.image && (

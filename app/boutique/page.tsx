@@ -5,6 +5,7 @@ import { ProductCard } from '@/components/product-card';
 import { SortSelect } from '@/components/sort-select';
 import { categories, getCategory } from '@/data/categories';
 import { products } from '@/data/products';
+import { normalizeForSearch } from '@/lib/search';
 
 type SearchParams = Promise<{ categorie?: string; q?: string; tri?: string }>;
 
@@ -28,21 +29,35 @@ export async function generateMetadata({
 export default async function BoutiquePage({ searchParams }: { searchParams: SearchParams }) {
   const { categorie, q, tri } = await searchParams;
   const activeCategory = categorie ? getCategory(categorie) : undefined;
-  const query = q?.trim().toLowerCase() ?? '';
+  // Recherche insensible aux accents ET à la casse (« coloree » trouve « Colorée »).
+  const query = normalizeForSearch(q ?? '');
 
   let list = products.filter((p) => {
     if (activeCategory && p.categoryId !== activeCategory.id) return false;
     if (query) {
-      const haystack = `${p.name} ${p.sku} ${p.brand ?? ''} ${p.shortDescription}`.toLowerCase();
+      const haystack = normalizeForSearch(
+        `${p.name} ${p.sku} ${p.brand ?? ''} ${p.shortDescription}`,
+      );
       if (!haystack.includes(query)) return false;
     }
     return true;
   });
 
-  if (tri === 'prix-asc') {
-    list = [...list].sort((a, b) => (a.salePrice ?? a.price) - (b.salePrice ?? b.price));
-  } else if (tri === 'prix-desc') {
-    list = [...list].sort((a, b) => (b.salePrice ?? b.price) - (a.salePrice ?? a.price));
+  // Les articles « prix sur demande » n'ont pas de prix (stocké à 0) : ils ne
+  // doivent pas passer pour les moins chers — on les renvoie toujours en fin de liste.
+  const effectivePrice = (p: (typeof products)[number]) =>
+    p.priceOnRequest ? null : (p.salePrice ?? p.price);
+
+  if (tri === 'prix-asc' || tri === 'prix-desc') {
+    const dir = tri === 'prix-asc' ? 1 : -1;
+    list = [...list].sort((a, b) => {
+      const pa = effectivePrice(a);
+      const pb = effectivePrice(b);
+      if (pa === null && pb === null) return 0;
+      if (pa === null) return 1;
+      if (pb === null) return -1;
+      return (pa - pb) * dir;
+    });
   }
 
   const chipParams = (categoryId?: string) => {

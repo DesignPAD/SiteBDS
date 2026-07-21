@@ -3,6 +3,13 @@
 // Panier côté client : ne stocke QUE des identifiants et quantités.
 // Les prix et totaux affichés sont dérivés du catalogue, et la commande
 // finale est recalculée côté serveur (app/actions/order.ts).
+//
+// Perf : le contexte est scindé en deux.
+//  - CartActionsContext : référence STABLE (jamais recréée) → les composants
+//    qui ne font qu'écrire (boutons « Ajouter au panier ») ne se re-rendent
+//    jamais quand le panier change.
+//  - CartStateContext : change à chaque mutation → seuls les composants qui
+//    lisent le panier (badge de l'en-tête, page panier) se re-rendent.
 
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 
@@ -51,16 +58,17 @@ function reducer(state: CartState, action: CartAction): CartState {
   }
 }
 
-type CartContextValue = {
-  items: CartItem[];
-  count: number;
+type CartActions = {
   add: (id: string, qty?: number) => void;
   setQty: (id: string, qty: number) => void;
   remove: (id: string) => void;
   clear: () => void;
 };
 
-const CartContext = createContext<CartContextValue | null>(null);
+type CartStateValue = { items: CartItem[]; count: number };
+
+const CartActionsContext = createContext<CartActions | null>(null);
+const CartStateContext = createContext<CartStateValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, { items: [], loaded: false });
@@ -94,23 +102,43 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [state.items, state.loaded]);
 
-  const value = useMemo<CartContextValue>(
+  // `dispatch` est stable : ces actions ne sont créées qu'une seule fois.
+  const actions = useMemo<CartActions>(
     () => ({
-      items: state.items,
-      count: state.items.reduce((sum, i) => sum + i.qty, 0),
       add: (id, qty = 1) => dispatch({ type: 'add', id, qty }),
       setQty: (id, qty) => dispatch({ type: 'setQty', id, qty }),
       remove: (id) => dispatch({ type: 'remove', id }),
       clear: () => dispatch({ type: 'clear' }),
     }),
+    [],
+  );
+
+  const value = useMemo<CartStateValue>(
+    () => ({
+      items: state.items,
+      count: state.items.reduce((sum, i) => sum + i.qty, 0),
+    }),
     [state.items],
   );
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return (
+    <CartActionsContext.Provider value={actions}>
+      <CartStateContext.Provider value={value}>{children}</CartStateContext.Provider>
+    </CartActionsContext.Provider>
+  );
 }
 
-export function useCart(): CartContextValue {
-  const ctx = useContext(CartContext);
-  if (!ctx) throw new Error('useCart doit être utilisé dans <CartProvider>');
+/** Écriture seule — ne provoque aucun re-rendu quand le panier change. */
+export function useCartActions(): CartActions {
+  const ctx = useContext(CartActionsContext);
+  if (!ctx) throw new Error('useCartActions doit être utilisé dans <CartProvider>');
   return ctx;
+}
+
+/** Lecture du panier — re-rend le composant à chaque mutation. */
+export function useCart(): CartStateValue & CartActions {
+  const state = useContext(CartStateContext);
+  const actions = useContext(CartActionsContext);
+  if (!state || !actions) throw new Error('useCart doit être utilisé dans <CartProvider>');
+  return { ...state, ...actions };
 }

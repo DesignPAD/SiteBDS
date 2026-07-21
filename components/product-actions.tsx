@@ -6,12 +6,12 @@
 
 import { useState } from 'react';
 import type { Product } from '@/data/products';
-import { useCart } from '@/lib/cart-context';
+import { useCartActions } from '@/lib/cart-context';
 import { waLink } from '@/lib/site';
 import Link from 'next/link';
 
 export function ProductActions({ product }: { product: Product }) {
-  const { add } = useCart();
+  const { add } = useCartActions();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
 
