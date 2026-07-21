@@ -6,13 +6,24 @@ import { SortSelect } from '@/components/sort-select';
 import { categories, getCategory } from '@/data/categories';
 import { products } from '@/data/products';
 
-export const metadata: Metadata = {
-  title: 'Boutique — Catalogue par catégories',
-  description:
-    'Tout le catalogue BDS Équipements : luminaires, carrelage, revêtements, sanitaire, robinetterie, portes et décoration. Prix officiels en F CFA.',
-};
-
 type SearchParams = Promise<{ categorie?: string; q?: string; tri?: string }>;
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}): Promise<Metadata> {
+  const { categorie, q } = await searchParams;
+  const cat = categorie ? getCategory(categorie) : undefined;
+  const title = cat ? `${cat.name} — Boutique` : 'Boutique — Catalogue par catégories';
+  const description =
+    cat?.description ??
+    'Tout le catalogue BDS Équipements : luminaires, carrelage, revêtements, sanitaire, robinetterie, portes et décoration. Prix officiels en F CFA.';
+  // Canonique : une page catégorie propre pointe vers elle-même ; les recherches
+  // et tris pointent vers la boutique de base pour éviter le contenu dupliqué.
+  const canonical = cat && !q ? `/boutique?categorie=${cat.id}` : '/boutique';
+  return { title, description, alternates: { canonical } };
+}
 
 export default async function BoutiquePage({ searchParams }: { searchParams: SearchParams }) {
   const { categorie, q, tri } = await searchParams;

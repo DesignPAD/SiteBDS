@@ -40,9 +40,20 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ['image/avif', 'image/webp'],
+    // Garde les images optimisées en cache 30 jours (moins de re-traitement).
+    minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   async headers() {
-    return [{ source: '/:path*', headers: securityHeaders }];
+    return [
+      { source: '/:path*', headers: securityHeaders },
+      {
+        // Cache long pour les assets statiques immuables (logo, collage, OG).
+        source: '/brand/:file*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+    ];
   },
 };
 

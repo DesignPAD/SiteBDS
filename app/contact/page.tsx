@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: 'Contact',
   description:
     'Contactez BDS Équipements à Dakar : WhatsApp, téléphone ou visite au magasin de Diamalaye. Réponse rapide pour vos commandes et devis.',
+  alternates: { canonical: '/contact' },
 };
 
 export default function ContactPage() {

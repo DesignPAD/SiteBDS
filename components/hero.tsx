@@ -1,48 +1,30 @@
-'use client';
-
-// Hero animé — Framer Motion.
-// Performance : uniquement transform et opacity (compositées GPU, 60 fps),
-// aucune animation de layout. Les animations sont désactivées si l'utilisateur
-// préfère réduire les mouvements (prefers-reduced-motion).
-
-import { motion, useReducedMotion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { waLink } from '@/lib/site';
 
+// Hero immersif. Composant serveur : aucune animation JS, tout est en CSS
+// (voir globals.css) — compositing GPU 60 fps, et le contenu LCP peint sans
+// attendre l'hydratation. Respecte prefers-reduced-motion.
 export function Hero() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section className="relative isolate flex min-h-[88vh] items-center overflow-hidden text-white">
-      {/* Sans JavaScript, les états initiaux (opacity:0) resteraient figés :
-          on force l'état final pour que le titre et les CTA restent visibles. */}
-      <noscript>
-        <style>{`[data-motion-fallback]{opacity:1 !important;transform:none !important}`}</style>
-      </noscript>
-      {/* Fond : collage produits avec zoom lent (Ken Burns) */}
-      <motion.div
-        aria-hidden
-        className="absolute inset-0 -z-20"
-        initial={{ scale: 1 }}
-        animate={reduceMotion ? {} : { scale: 1.05 }}
-        transition={{
-          duration: 8,
-          ease: 'easeInOut',
-          repeat: Infinity,
-          repeatType: 'reverse',
-        }}
-        style={{ willChange: 'transform' }}
-      >
-        <Image
-          src="/brand/background-hero.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-      </motion.div>
+      {/* Préchargement du fond (React 19 remonte ces <link> dans <head>) pour un LCP rapide. */}
+      <link
+        rel="preload"
+        as="image"
+        href="/brand/background-hero-mobile.webp"
+        media="(max-width: 767px)"
+        fetchPriority="high"
+      />
+      <link
+        rel="preload"
+        as="image"
+        href="/brand/background-hero.webp"
+        media="(min-width: 768px)"
+        fetchPriority="high"
+      />
+      {/* Fond : collage produits (background-image CSS) avec zoom lent (Ken Burns) */}
+      <div aria-hidden className="bds-hero-bg bds-kenburns absolute inset-0 -z-20" />
 
       {/* Dégradé gauche → droite : lisible à gauche, collage révélé à droite */}
       <div
@@ -65,31 +47,21 @@ export function Hero() {
 
       <div className="mx-auto grid w-full max-w-7xl items-center gap-8 px-4 py-16 lg:grid-cols-2 lg:py-20">
         {/* Panneau texte : voile navy 70% + léger flou uniquement derrière le contenu */}
-        <div className="rounded-card bg-[#0B1730]/70 p-7 backdrop-blur-[5px] sm:p-9">
+        {/* Voile navy assez opaque pour la lisibilité ; le flou (coûteux sur GPU
+            mobile → retarde le LCP) n'est activé qu'à partir de md. */}
+        <div className="rounded-card bg-[#0B1730]/80 p-7 sm:p-9 md:bg-[#0B1730]/70 md:backdrop-blur-[5px]">
           <p className="mb-3 inline-block rounded-full bg-sun/20 px-3 py-1 text-sm font-semibold text-sun">
-            Quincaillerie & équipement maison — Dakar
+            Quincaillerie &amp; équipement maison — Dakar
           </p>
-          <motion.h1
-            data-motion-fallback
-            className="text-3xl font-extrabold leading-tight sm:text-5xl"
-            initial={reduceMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.9, ease: 'easeOut' }}
-          >
+          <h1 className="bds-fade-in text-3xl font-extrabold leading-tight sm:text-5xl">
             Équipez votre maison <span className="text-sun">sans vous ruiner</span>
-          </motion.h1>
+          </h1>
           <p className="mt-4 max-w-lg text-white/80">
             Matériaux de construction, sanitaire, luminaires, portes et
             revêtements — aux prix officiels du magasin, livrés chez vous à
             Dakar.
           </p>
-          <motion.div
-            data-motion-fallback
-            className="mt-8 flex flex-wrap gap-3"
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.35, ease: 'easeOut' }}
-          >
+          <div className="bds-rise mt-8 flex flex-wrap gap-3">
             <Link
               href="/boutique"
               className="rounded-full bg-brand px-7 py-3.5 font-bold text-white transition hover:bg-brand-dark"
@@ -104,37 +76,29 @@ export function Hero() {
             >
               Demander un devis
             </a>
-          </motion.div>
+          </div>
         </div>
 
         {/* Produit vedette : halo bleu doux + flottement léger */}
         <div className="relative">
-          <motion.div
+          <div
             aria-hidden
-            className="absolute -inset-10 -z-10"
+            className="bds-glow absolute -inset-10 -z-10"
             style={{
               background:
                 'radial-gradient(closest-side, rgba(56,116,255,.35), rgba(251,192,45,.12) 55%, transparent 75%)',
-              willChange: 'opacity',
             }}
-            animate={reduceMotion ? {} : { opacity: [0.75, 1, 0.75] }}
-            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
           />
-          <motion.div
-            className="overflow-hidden rounded-card shadow-2xl shadow-black/40 ring-1 ring-white/15"
-            animate={reduceMotion ? {} : { y: [0, -6, 0] }}
-            transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-            style={{ willChange: 'transform' }}
-          >
+          <div className="bds-float overflow-hidden rounded-card shadow-2xl shadow-black/40 ring-1 ring-white/15">
             <Image
               src="/brand/chambre-hero.jpg"
               alt="Chambre à coucher complète disponible chez BDS Équipements"
               width={1080}
               height={715}
-              priority
+              sizes="(min-width: 1024px) 45vw, 100vw"
               className="h-full w-full object-cover"
             />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -24,7 +24,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   return {
     title: product.name,
     description: `${product.shortDescription} Réf. ${product.sku} — disponible chez ${site.name}, Dakar.`,
-    openGraph: { images: [product.images[0].src] },
+    alternates: { canonical: `/produit/${product.slug}` },
+    openGraph: {
+      type: 'website',
+      title: product.name,
+      images: [{ url: product.images[0].src, alt: product.images[0].alt }],
+    },
   };
 }
 

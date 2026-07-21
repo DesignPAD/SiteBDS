@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 import './globals.css';
 import { Footer } from '@/components/footer';
@@ -20,11 +20,36 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description: site.description,
+  applicationName: site.name,
+  keywords: [
+    'quincaillerie Dakar',
+    'matériaux de construction Sénégal',
+    'sanitaire Dakar',
+    'luminaires Dakar',
+    'robinetterie',
+    'carrelage Dakar',
+    'BDS Équipements',
+  ],
+  alternates: { canonical: '/' },
   openGraph: {
     siteName: site.name,
     locale: 'fr_SN',
     type: 'website',
+    url: site.url,
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+    images: [{ url: '/og.jpg', width: 1200, height: 630, alt: site.name }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+    images: ['/og.jpg'],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#16233b',
 };
 
 export default function RootLayout({

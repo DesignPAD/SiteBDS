@@ -7,14 +7,14 @@
   --color-sun: #fbc02d; /* jaune — badges, accents */
   --color-navy: #16233b; /* bleu nuit de l'enseigne — header/footer/texte fort */
   --color-navy-light: #22304d;
-  --color-royal: #3874ff; /* bleu vif — liens, infos */
+  --color-royal: #1d4ed8; /* bleu liens/infos (assombri pour contraste AA) */
   --color-sand: #e5cb90; /* sable — fonds doux */
   --color-cream: #faf8f4; /* fond de page neutre chaud */
   --color-ink: #1c2436; /* texte principal */
   --color-muted: #5b6474; /* texte secondaire */
   --color-line: #e8e4dc; /* bordures */
-  --color-success: #1a7f4b;
-  --color-danger: #d64545;
+  --color-success: #15653c; /* vert (assombri pour contraste AA du texte/badge) */
+  --color-danger: #c02626; /* rouge (assombri pour contraste AA) */
 
   --font-sans: var(--font-manrope), system-ui, sans-serif;
 
@@ -31,4 +31,41 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-royal);
   outline-offset: 2px;
+}
+
+/* Fond du hero : WebP léger via background-image (peint avec le calque, sans
+   décodage <img> asynchrone). Variante mobile plus légère sous 768px. */
+.bds-hero-bg {
+  background-image: url('/brand/background-hero-mobile.webp');
+  background-size: cover;
+  background-position: center;
+}
+@media (min-width: 768px) {
+  .bds-hero-bg {
+    background-image: url('/brand/background-hero.webp');
+  }
+}
+
+/* ===== Animations du hero — CSS pur (compositées GPU, 60 fps, zéro JS) =====
+   Elles démarrent au premier rendu, sans attendre l'hydratation : le contenu
+   LCP peint immédiatement. */
+@keyframes bds-kenburns { from { transform: scale(1); } to { transform: scale(1.05); } }
+@keyframes bds-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes bds-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes bds-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes bds-glow { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
+
+/* Le zoom du fond est réservé au desktop : sur mobile, animer un calque plein
+   écran retarde la peinture de l'image LCP. */
+@media (min-width: 768px) {
+  .bds-kenburns { animation: bds-kenburns 8s ease-in-out infinite alternate; }
+}
+.bds-fade-in { animation: bds-fade-in 0.9s ease-out both; }
+.bds-rise { animation: bds-rise 0.7s ease-out 0.35s both; }
+.bds-float { animation: bds-float 4.5s ease-in-out infinite; will-change: transform; }
+.bds-glow { animation: bds-glow 5s ease-in-out infinite; will-change: opacity; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bds-kenburns, .bds-fade-in, .bds-rise, .bds-float, .bds-glow { animation: none !important; }
+  .bds-fade-in, .bds-rise { opacity: 1 !important; transform: none !important; }
 }

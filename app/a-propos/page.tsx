@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: 'À propos',
   description:
     'BDS Équipements, quincaillerie et expo-vente à Diamalaye, Dakar : matériaux de construction tous genres, sanitaire, luminaires et équipement maison.',
+  alternates: { canonical: '/a-propos' },
 };
 
 export default function AboutPage() {

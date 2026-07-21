@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: 'Services — Livraison, conseil et devis',
   description:
     'Les services BDS Équipements à Dakar : livraison, conseil avant achat, commande assistée et devis pour particuliers, artisans et chantiers.',
+  alternates: { canonical: '/services' },
 };
 
 const services = [
