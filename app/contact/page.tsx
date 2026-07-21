@@ -21,19 +21,29 @@ export default function ContactPage() {
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
-        <a
-          href={waLink('Bonjour BDS Équipements !')}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="rounded-card border border-line bg-white p-6 shadow-card transition-[transform,box-shadow] duration-300 ease-smooth hover:-translate-y-1 hover:shadow-card-hover"
-        >
+        {/* Chaque numéro ouvre SA propre conversation WhatsApp : la carte était
+            un seul lien, donc cliquer le 2e numéro écrivait au 1er. */}
+        <div className="rounded-card border border-line bg-white p-6 shadow-card">
           <div className="flex items-center gap-2">
             <AdviceIcon className="h-6 w-6 text-sun" />
             <p className="font-extrabold text-navy">WhatsApp (recommandé)</p>
           </div>
-          <p className="mt-1 text-sm text-muted">{site.phones[0]}</p>
-          <p className="text-sm text-muted">{site.phones[1]}</p>
-        </a>
+          {[
+            { tel: site.phones[0], num: site.whatsapp },
+            { tel: site.phones[1], num: site.whatsappSecondary },
+          ].map(({ tel, num }) => (
+            <p key={tel} className="mt-1 text-sm">
+              <a
+                href={waLink('Bonjour BDS Équipements !', num)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-royal transition-colors duration-150 hover:underline"
+              >
+                {tel}
+              </a>
+            </p>
+          ))}
+        </div>
         <div className="rounded-card border border-line bg-white p-6">
           <div className="flex items-center gap-2">
             <PhoneIcon className="h-6 w-6 text-sun" />
