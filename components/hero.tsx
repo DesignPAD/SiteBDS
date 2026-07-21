@@ -45,7 +45,7 @@ export function Hero() {
         }}
       />
 
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-8 px-4 py-16 lg:grid-cols-2 lg:py-20">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-10 px-5 py-16 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8 lg:py-20">
         {/* Panneau texte : voile navy 70% + léger flou uniquement derrière le contenu */}
         {/* Voile navy assez opaque pour la lisibilité ; le flou (coûteux sur GPU
             mobile → retarde le LCP) n'est activé qu'à partir de md. */}
@@ -53,10 +53,10 @@ export function Hero() {
           <p className="mb-3 inline-block rounded-full bg-sun/20 px-3 py-1 text-sm font-semibold text-sun">
             Quincaillerie &amp; équipement maison — Dakar
           </p>
-          <h1 className="bds-fade-in text-3xl font-extrabold leading-tight sm:text-5xl">
+          <h1 className="bds-fade-in text-4xl font-extrabold leading-[1.08] sm:text-5xl">
             Équipez votre maison <span className="text-sun">sans vous ruiner</span>
           </h1>
-          <p className="mt-4 max-w-lg text-white/80">
+          <p className="mt-5 max-w-lg leading-relaxed text-white/75 sm:text-lg">
             Matériaux de construction, sanitaire, luminaires, portes et
             revêtements — aux prix officiels du magasin, livrés chez vous à
             Dakar.
@@ -64,7 +64,7 @@ export function Hero() {
           <div className="bds-rise mt-8 flex flex-wrap gap-3">
             <Link
               href="/boutique"
-              className="rounded-full bg-brand px-7 py-3.5 font-bold text-navy transition hover:bg-brand-dark"
+              className="rounded-full bg-brand px-7 py-3.5 font-bold text-navy shadow-btn transition-[background-color,box-shadow,transform] duration-200 ease-smooth hover:bg-brand-dark hover:shadow-btn-hover active:scale-[0.98]"
             >
               Voir le catalogue
             </Link>
@@ -72,7 +72,7 @@ export function Hero() {
               href={waLink('Bonjour BDS Équipements, je souhaite demander un devis.')}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full border-2 border-white/40 px-7 py-3.5 font-bold text-white transition hover:border-sun hover:text-sun"
+              className="rounded-full border border-white/30 px-7 py-3.5 font-bold text-white transition-colors duration-200 ease-smooth hover:border-sun hover:bg-white/5 hover:text-sun active:scale-[0.98]"
             >
               Demander un devis
             </a>

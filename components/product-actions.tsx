@@ -35,7 +35,7 @@ export function ProductActions({ product }: { product: Product }) {
           <button
             type="button"
             onClick={() => setQty((q) => Math.max(1, q - 1))}
-            className="h-10 w-10 rounded-l-full text-lg font-bold text-navy hover:bg-cream"
+            className="h-10 w-10 rounded-l-full text-lg font-bold text-navy transition-colors duration-150 hover:bg-cream"
             aria-label="Diminuer la quantité"
           >
             −
@@ -44,7 +44,7 @@ export function ProductActions({ product }: { product: Product }) {
           <button
             type="button"
             onClick={() => setQty((q) => Math.min(99, q + 1))}
-            className="h-10 w-10 rounded-r-full text-lg font-bold text-navy hover:bg-cream"
+            className="h-10 w-10 rounded-r-full text-lg font-bold text-navy transition-colors duration-150 hover:bg-cream"
             aria-label="Augmenter la quantité"
           >
             +
@@ -61,7 +61,7 @@ export function ProductActions({ product }: { product: Product }) {
               setAdded(true);
               setTimeout(() => setAdded(false), 1800);
             }}
-            className="flex-1 rounded-full bg-brand px-6 py-3 text-center font-bold text-navy transition hover:bg-brand-dark"
+            className="flex-1 rounded-full bg-brand px-6 py-3 text-center font-bold text-navy shadow-btn transition-[background-color,box-shadow,transform] duration-200 ease-smooth hover:bg-brand-dark hover:shadow-btn-hover active:scale-[0.98]"
           >
             {added ? '✓ Ajouté au panier' : 'Ajouter au panier'}
           </button>
@@ -70,7 +70,7 @@ export function ProductActions({ product }: { product: Product }) {
           href={waLink(whatsappMessage)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 rounded-full bg-success px-6 py-3 text-center font-bold text-white transition hover:opacity-90"
+          className="flex-1 rounded-full bg-success px-6 py-3 text-center font-bold text-white shadow-btn transition-[opacity,box-shadow,transform] duration-200 ease-smooth hover:opacity-90 active:scale-[0.98]"
         >
           Commander sur WhatsApp
         </a>

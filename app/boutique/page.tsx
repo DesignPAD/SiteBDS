@@ -55,7 +55,7 @@ export default async function BoutiquePage({ searchParams }: { searchParams: Sea
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-5 py-10 sm:px-6 sm:py-14 lg:px-8">
       {/* Breadcrumbs */}
       <nav aria-label="Fil d’Ariane" className="mb-4 text-sm text-muted">
         <ol className="flex flex-wrap gap-1">
@@ -79,10 +79,10 @@ export default async function BoutiquePage({ searchParams }: { searchParams: Sea
         </ol>
       </nav>
 
-      <h1 className="text-3xl font-extrabold text-navy">
+      <h1 className="text-3xl font-extrabold text-navy sm:text-4xl">
         {activeCategory ? activeCategory.name : 'Boutique'}
       </h1>
-      <p className="mt-1 text-muted">
+      <p className="mt-2 max-w-2xl leading-relaxed text-muted">
         {activeCategory?.description ??
           'Tous nos produits, aux prix officiels du magasin.'}
         {query && (
@@ -97,10 +97,10 @@ export default async function BoutiquePage({ searchParams }: { searchParams: Sea
         <Link
           href={`/boutique${chipParams()}`}
           aria-current={!activeCategory ? 'true' : undefined}
-          className={`rounded-full px-4 py-2 text-sm font-bold transition ${
+          className={`rounded-full px-4 py-2 text-sm font-bold transition-[background-color,border-color,color,box-shadow] duration-200 ease-smooth ${
             !activeCategory
-              ? 'bg-navy text-white'
-              : 'border border-line bg-white text-ink hover:border-navy'
+              ? 'bg-navy text-white shadow-btn'
+              : 'border border-line bg-white text-ink hover:border-navy/40 hover:bg-cream'
           }`}
         >
           Tous
@@ -110,10 +110,10 @@ export default async function BoutiquePage({ searchParams }: { searchParams: Sea
             key={c.id}
             href={`/boutique${chipParams(c.id)}`}
             aria-current={activeCategory?.id === c.id ? 'true' : undefined}
-            className={`rounded-full px-4 py-2 text-sm font-bold transition ${
+            className={`rounded-full px-4 py-2 text-sm font-bold transition-[background-color,border-color,color,box-shadow] duration-200 ease-smooth ${
               activeCategory?.id === c.id
-                ? 'bg-navy text-white'
-                : 'border border-line bg-white text-ink hover:border-navy'
+                ? 'bg-navy text-white shadow-btn'
+                : 'border border-line bg-white text-ink hover:border-navy/40 hover:bg-cream'
             }`}
           >
             {c.name}
@@ -135,21 +135,21 @@ export default async function BoutiquePage({ searchParams }: { searchParams: Sea
       {/* Titre de niveau 2 pour conserver la hiérarchie h1 → h2 → h3 (cartes produit). */}
       <h2 className="sr-only">Résultats</h2>
       {list.length > 0 ? (
-        <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {list.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
         </div>
       ) : (
-        <div className="mt-10 rounded-card border border-line bg-white p-10 text-center">
+        <div className="mt-10 rounded-card border border-line bg-white p-10 text-center shadow-card sm:p-14">
           <p className="text-lg font-bold text-navy">Aucun produit trouvé</p>
-          <p className="mt-2 text-sm text-muted">
+          <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted">
             Essayez un autre mot-clé ou une autre catégorie — ou contactez-nous,
             nous avons beaucoup plus de produits en magasin.
           </p>
           <Link
             href="/boutique"
-            className="mt-4 inline-block rounded-full bg-brand px-6 py-2.5 font-bold text-navy hover:bg-brand-dark"
+            className="mt-6 inline-block rounded-full bg-brand px-6 py-2.5 font-bold text-navy shadow-btn transition-[background-color,box-shadow,transform] duration-200 ease-smooth hover:bg-brand-dark hover:shadow-btn-hover active:scale-[0.98]"
           >
             Voir tous les produits
           </Link>

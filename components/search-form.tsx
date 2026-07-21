@@ -27,7 +27,7 @@ export function SearchForm({
       <div className="flex w-full">
         <input id={id} name="q" type="search" placeholder={placeholder} className={`w-full ${input}`} />
         <button type="submit" className={button} aria-label="Rechercher">
-          <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+          <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7" />
             <line x1="21" y1="21" x2="16.5" y2="16.5" />
           </svg>

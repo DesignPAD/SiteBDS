@@ -93,7 +93,7 @@ export default async function ProductPage({ params }: { params: Params }) {
   };
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-5 py-10 sm:px-6 sm:py-14 lg:px-8">
       <JsonLd data={productJsonLd} />
       <JsonLd data={breadcrumbJsonLd} />
 
@@ -120,9 +120,9 @@ export default async function ProductPage({ params }: { params: Params }) {
         </ol>
       </nav>
 
-      <div className="grid gap-8 lg:grid-cols-2">
+      <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
         {/* Galerie */}
-        <div className="overflow-hidden rounded-card border border-line bg-white">
+        <div className="overflow-hidden rounded-card border border-line bg-white shadow-card">
           <Image
             src={product.images[0].src}
             alt={product.images[0].alt}
@@ -138,13 +138,13 @@ export default async function ProductPage({ params }: { params: Params }) {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             {category && (
-              <span className="rounded bg-cream px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-muted">
+              <span className="rounded-full bg-cream px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-muted">
                 {category.name}
               </span>
             )}
             <StockBadge status={product.stockStatus} />
           </div>
-          <h1 className="mt-3 text-3xl font-extrabold text-navy">{product.name}</h1>
+          <h1 className="mt-4 text-3xl font-extrabold text-navy sm:text-4xl">{product.name}</h1>
           <p className="mt-1 text-sm text-muted">
             Réf. {product.sku}
             {product.brand && <> · Marque : {product.brand}</>}
@@ -159,7 +159,7 @@ export default async function ProductPage({ params }: { params: Params }) {
           </div>
 
           {/* Livraison — parcours commande → livraison */}
-          <div className="mt-6 space-y-2 rounded-card bg-white border border-line p-4 text-sm">
+          <div className="mt-6 space-y-2 rounded-card border border-line bg-white p-5 text-sm shadow-card">
             <p className="font-bold text-navy">Comment ça se passe ?</p>
             <ol className="list-decimal space-y-1 pl-5 text-muted">
               <li>Ajoutez au panier ou écrivez-nous sur WhatsApp.</li>
@@ -172,11 +172,11 @@ export default async function ProductPage({ params }: { params: Params }) {
 
       {/* Description + specs */}
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
-        <section className="rounded-card border border-line bg-white p-6">
+        <section className="rounded-card border border-line bg-white p-6 shadow-card sm:p-7">
           <h2 className="text-lg font-extrabold text-navy">Description</h2>
           <p className="mt-3 text-sm leading-relaxed text-muted">{product.description}</p>
         </section>
-        <section className="rounded-card border border-line bg-white p-6">
+        <section className="rounded-card border border-line bg-white p-6 shadow-card sm:p-7">
           <h2 className="text-lg font-extrabold text-navy">Caractéristiques</h2>
           <dl className="mt-3 divide-y divide-line text-sm">
             {Object.entries(product.specifications).map(([key, value]) => (

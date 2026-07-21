@@ -66,8 +66,8 @@ export function Header() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-40 bg-white shadow-sm">
-      <div className="mx-auto max-w-7xl px-4 py-3 flex items-center gap-3 sm:gap-6">
+    <header className="sticky top-0 z-40 border-b border-line bg-white">
+      <div className="mx-auto flex max-w-7xl items-center gap-3 px-5 py-3 sm:gap-6 sm:px-6 lg:px-8">
         <button
           ref={openerRef}
           type="button"
@@ -76,7 +76,7 @@ export function Header() {
           aria-label="Ouvrir le menu"
           aria-expanded={open}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
             <line x1="4" y1="6" x2="20" y2="6" />
             <line x1="4" y1="12" x2="20" y2="12" />
             <line x1="4" y1="18" x2="20" y2="18" />
@@ -126,7 +126,7 @@ export function Header() {
             className="relative grid h-10 w-10 place-items-center rounded-full bg-cream text-navy hover:bg-sand/40"
             aria-label={`Panier, ${count} article${count > 1 ? 's' : ''}`}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="8" cy="21" r="1" />
               <circle cx="19" cy="21" r="1" />
               <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />

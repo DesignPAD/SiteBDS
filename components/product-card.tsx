@@ -11,9 +11,9 @@ export function ProductCard({ product }: { product: Product }) {
   const image = product.images[0];
 
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-card border border-line bg-white transition hover:shadow-lg">
+    <article className="group relative flex flex-col overflow-hidden rounded-card border border-line bg-white shadow-card transition-[transform,box-shadow,border-color] duration-300 ease-smooth hover:-translate-y-1 hover:border-line/60 hover:shadow-card-hover">
       {product.salePrice != null && (
-        <span className="absolute right-3 top-3 z-10 rounded-full bg-danger px-2.5 py-1 text-xs font-bold text-white">
+        <span className="absolute right-3 top-3 z-10 rounded-full bg-danger px-2.5 py-1 text-[11px] font-semibold tracking-wide text-white shadow-btn">
           En promo
         </span>
       )}
@@ -28,30 +28,33 @@ export function ProductCard({ product }: { product: Product }) {
           width={480}
           height={480}
           sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 90vw"
-          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-700 ease-smooth group-hover:scale-[1.04]"
         />
       </Link>
-      <div className="flex flex-1 flex-col gap-2 p-4">
+      <div className="flex flex-1 flex-col gap-2 p-5">
         <div className="flex items-center justify-between gap-2">
           {category && (
-            <span className="rounded bg-cream px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-muted">
+            <span className="rounded-full bg-cream px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-muted">
               {category.name}
             </span>
           )}
           <StockBadge status={product.stockStatus} />
         </div>
-        <h3 className="font-bold leading-snug text-ink">
-          <Link href={`/produit/${product.slug}`} className="hover:text-brand">
+        <h3 className="text-[0.9375rem] font-bold leading-snug text-ink">
+          <Link
+            href={`/produit/${product.slug}`}
+            className="transition-colors duration-200 hover:text-brand-ink"
+          >
             {product.name}
           </Link>
         </h3>
-        <p className="text-xs text-muted">{product.shortDescription}</p>
-        <div className="mt-auto flex items-center justify-between gap-2 pt-2">
+        <p className="text-[0.8125rem] leading-relaxed text-muted">{product.shortDescription}</p>
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
           <Price product={product} />
           {product.priceOnRequest ? (
             <Link
               href={`/produit/${product.slug}`}
-              className="rounded-full border-2 border-navy px-4 py-1.5 text-sm font-bold text-navy hover:bg-navy hover:text-white"
+              className="rounded-full border border-navy px-4 py-2 text-sm font-bold text-navy transition-colors duration-200 ease-smooth hover:bg-navy hover:text-white active:scale-[0.98]"
             >
               Demander
             </Link>

@@ -8,7 +8,7 @@ import { site, waLink } from '@/lib/site';
 export function Footer() {
   return (
     <footer className="mt-16 bg-navy text-white">
-      <div className="mx-auto max-w-7xl px-4 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Image
             src="/brand/logo-bds.jpg"
