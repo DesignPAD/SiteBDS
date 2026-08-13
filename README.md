@@ -36,6 +36,8 @@ bds-equipements-v2/
 └── ...
 ```
 
+
+
 ## Règles du projet (résumé du brief)
 
 - Une seule promesse BDS, un seul H1 par page, pas de carrousel autoplay.
