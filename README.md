@@ -27,9 +27,9 @@ bds-equipements-v2/
 ├── app/            ← Pages (App Router)
 ├── data/
 │   ├── categories.ts   ← 5 catégories BDS
-│   └── products.ts     ← 36 produits réels, prix officiels du magasin (juillet 2026)
+│   └── products.ts     ← 51 produits réels, prix officiels du magasin (juillet 2026)
 ├── public/
-│   └── products/       ← 36 photos produits
+│   └── products/       ← 51 photos produits optimisées
 ├── docs/
 │   ├── bds-equipements-claude-code-brief.md  ← Le brief de référence
 │   └── design-references/                    ← Captures d'inspiration (principes seulement)
